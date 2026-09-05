@@ -755,13 +755,7 @@
       <div class="lf-left-col">
         <button class="mobile-only icon-btn" onclick="toggleMenu()" aria-label="Open menu"><svg viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="1.5" aria-hidden="true"><path d="M3 12h18M3 6h18M3 18h18"/></svg></button>
         <div class="desktop-only" style="width:100%;">
-          <div class="lf-search">
-            <form class="lf-search-form" action="/search" method="get" role="search">
-              <input type="search" name="q" class="lf-search-input" placeholder="Search products, brands..." autocomplete="off" aria-label="Search products">
-              <button type="submit" class="lf-search-go" aria-label="Search"><svg viewBox="0 0 24 24" width="17" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></button>
-            </form>
-            <div class="lf-search-drop" hidden></div>
-          </div>
+          {% render 'header-search', input_id: 'Search-In-Modal-Desktop', section: section %}
         </div>
       </div>
 
@@ -815,15 +809,7 @@
     </div>
   </div>
 
-  <div class="lf-msearch mobile-only" id="lf-msearch">
-    <div class="lf-search">
-      <form class="lf-search-form" action="/search" method="get" role="search">
-        <input type="search" name="q" class="lf-search-input" placeholder="Search products, brands..." autocomplete="off" aria-label="Search products">
-        <button type="submit" class="lf-search-go" aria-label="Search"><svg viewBox="0 0 24 24" width="17" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></button>
-      </form>
-      <div class="lf-search-drop" hidden></div>
-    </div>
-  </div>
+  <div class="lf-msearch mobile-only" id="lf-msearch">{% render 'header-search', input_id: 'Search-In-Modal-Mobile', section: section %}</div>
 
   <nav class="lf-nav-bar desktop-only">
     <div class="container-wide">
@@ -907,151 +893,6 @@
 
 </div>
 
-<!-- CART DRAWER -->
-<div id="lux-cart-drawer" role="dialog" aria-label="Your shopping bag" aria-modal="true">
-
-  <!-- Header -->
-  <div id="lf-cart-header">
-    <div id="lf-cart-title">Your Bag <span id="lf-cart-count"></span></div>
-    <button id="lf-cart-close" onclick="closeDrawers()" aria-label="Close shopping bag">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-    </button>
-  </div>
-
-  <!-- Shipping progress -->
-  <div id="lf-cart-shipping">
-    <div id="lf-ship-msg">Loading&hellip;</div>
-    <div id="lf-ship-track"><div id="lf-ship-fill"></div></div>
-  </div>
-
-  <!-- Exclusive Offers (Monk backend runs silently; custom luxury UI below) -->
-  <div id="lf-monk-offers">
-    <div id="lf-monk-offers-label">Exclusive Privileges</div>
-    <div id="lf-monk-gift-msg">Loading&hellip;</div>
-    <div id="lf-monk-gift-track"><div id="lf-monk-gift-fill"></div></div>
-    <div class="lf-monk-offer-row">
-      <div class="lf-monk-offer-dot"></div>
-      <div class="lf-monk-offer-text">Complimentary samples with qualifying brand orders</div>
-    </div>
-    <div class="lf-monk-offer-row">
-      <div class="lf-monk-offer-dot"></div>
-      <div class="lf-monk-offer-text">Exclusive seasonal gifts across selected collections</div>
-    </div>
-  </div>
-
-  <!-- Item list -->
-  <div id="lux-cart-items" role="list"></div>
-
-  <!-- Empty state -->
-  <div id="lf-cart-empty">
-    <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" aria-hidden="true"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
-    <div class="lf-ce-title">Your Bag is Empty</div>
-    <p class="lf-ce-body">Discover expertly curated skincare from the world's leading dermatology brands.</p>
-    <div class="lf-ce-links">
-      <a href="/collections/best-sellers" class="lf-ce-link" onclick="closeDrawers()">Best Sellers</a>
-      <a href="/collections/all" class="lf-ce-link" onclick="closeDrawers()">Shop All</a>
-    </div>
-  </div>
-
-  <!-- Upsell strip -->
-  <div id="lf-cart-upsells" style="display:none;">
-    <div id="lf-upsell-label">Complete Your Routine</div>
-    <div id="lf-upsell-strip"></div>
-  </div>
-
-  <!-- Footer -->
-  <div id="lf-cart-footer">
-    <div id="lf-cart-savings">
-      <span id="lf-savings-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>You're saving</span>
-      <span id="lf-savings-val"></span>
-    </div>
-    <div id="lf-cart-subtotal">
-      <span id="lf-cart-subtotal-label">Subtotal</span>
-      <span id="drawer-total-val">{{ cart.total_price | money }}</span>
-    </div>
-    <form action="/cart" method="post">
-      <button type="submit" name="checkout" id="lf-cart-checkout-btn">
-        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="1"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-        Secure Checkout
-      </button>
-    </form>
-    <div id="lf-cart-trust">
-      <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-      SSL Encrypted &nbsp;&middot;&nbsp; Free Returns
-    </div>
-    <div id="lf-cart-payments">
-      {%- for type in shop.enabled_payment_types -%}
-        {{ type | payment_type_svg_tag: class: 'payment-icon' }}
-      {%- endfor -%}
-    </div>
-  </div>
-
-</div>
-
-<!-- MOBILE NAV -->
-<div class="lf-mob-drawer" id="mobile-nav">
-  <div style="padding:20px; border-bottom:1px solid #eee; font-weight:700; font-size:12px; letter-spacing:0.08em; display:flex; justify-content:space-between; align-items:center;">MENU <button onclick="closeDrawers()" style="background:none; border:none; font-weight:700; font-size:11px; cursor:pointer; opacity:0.6;">[X]</button></div>
-  {% for link in main_menu.links %}
-    <div class="mob-nav-item">
-      <div class="mob-row">
-        <a href="{{ link.url }}" class="mob-nav-link-main">{{ link.title }}</a>
-        {% if link.links != blank %}
-          <button class="mob-toggle-btn" onclick="toggleSubMobile(event, this)">+</button>
-        {% endif %}
-      </div>
-      {% if link.links != blank %}
-        {%- assign mob_link_handle = link.title | handleize -%}
-        {% if mob_link_handle == 'brands' %}
-          <div class="mob-submenu">
-            {%- assign alphabet = "A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z" | split: "," -%}
-            {%- for letter in alphabet -%}
-              {%- assign letter_has = false -%}
-              {%- for brand in link.links -%}{%- assign bf = brand.title | slice: 0 | upcase -%}{%- if bf == letter -%}{%- assign letter_has = true -%}{%- endif -%}{%- endfor -%}
-              {%- if letter_has -%}
-                <div class="mob-brand-letter">{{ letter }}</div>
-                {%- for brand in link.links -%}
-                  {%- assign bf = brand.title | slice: 0 | upcase -%}
-                  {%- if bf == letter -%}
-                    <div class="mob-row lvl-2">
-                      <a href="{{ brand.url }}" class="mob-nav-link-main">{{ brand.title }}</a>
-                      {% if brand.links != blank %}<button class="mob-toggle-btn" onclick="toggleSubMobile(event, this)">+</button>{% endif %}
-                    </div>
-                    {% if brand.links != blank %}
-                      <div class="mob-submenu">
-                        {% for r in brand.links %}<a href="{{ r.url }}" class="mob-link-final">{{ r.title }}</a>{% endfor %}
-                      </div>
-                    {% endif %}
-                  {%- endif -%}
-                {%- endfor -%}
-              {%- endif -%}
-            {%- endfor -%}
-          </div>
-        {% else %}
-          <div class="mob-submenu">
-            {% for child in link.links %}
-               <div class="mob-row lvl-2">
-                 <a href="{{ child.url }}" class="mob-nav-link-main">{{ child.title }}</a>
-                 {% if child.links != blank %}
-                   <button class="mob-toggle-btn" onclick="toggleSubMobile(event, this)">+</button>
-                 {% endif %}
-               </div>
-               {% if child.links != blank %}
-                 <div class="mob-submenu">
-                   {% for sub_child in child.links %}
-                     <a href="{{ sub_child.url }}" class="mob-link-final">{{ sub_child.title }}</a>
-                   {% endfor %}
-                 </div>
-               {% endif %}
-            {% endfor %}
-          </div>
-        {% endif %}
-      {% endif %}
-    </div>
-  {% endfor %}
-</div>
-
-<div class="overlay-bg" id="header-overlay" onclick="closeDrawers()"></div>
-
 <script>
   // ── Montserrat (non-blocking) ───────────────────────────────────
   if (!document.querySelector('link[href*="Lato"]')) {
@@ -1128,12 +969,7 @@
   document.addEventListener('DOMContentLoaded',function(){ document.querySelectorAll('.lf-search').forEach(lfWireSearch); });
 
   // ── Close cart + mobile nav ─────────────────────────────────────
-  function closeDrawers() {
-    document.getElementById('mobile-nav').classList.remove('active');
-    document.getElementById('lux-cart-drawer').classList.remove('is-open');
-    document.getElementById('header-overlay').classList.remove('active');
-    document.body.style.overflow = '';
-  }
+function closeDrawers(){}
 
   function toggleMenu() {
     document.getElementById('mobile-nav').classList.add('active');
@@ -1141,12 +977,7 @@
     document.body.style.overflow = 'hidden';
   }
 
-  function openCart() {
-    updateCartDrawer();
-    document.getElementById('lux-cart-drawer').classList.add('is-open');
-    document.getElementById('header-overlay').classList.add('active');
-    document.body.style.overflow = 'hidden';
-  }
+function openCart(){ document.dispatchEvent(new CustomEvent("cart:refresh")); }
 
   // ── Mobile submenu ──────────────────────────────────────────────
   function toggleSubMobile(e, btn) {
@@ -1191,16 +1022,7 @@
   var LF_SHIP_THRESHOLD = 10000; // £100.00 - free shipping over £100 (permanent)
 
   // ── Shipping progress bar ────────────────────────────────────────
-  function updateShippingBar(totalPence) {
-    var msg  = document.getElementById('lf-ship-msg');
-    var fill = document.getElementById('lf-ship-fill');
-    if (!msg || !fill) return;
-    if (totalPence >= LF_SHIP_THRESHOLD) {
-      msg.innerHTML = 'You\'ve unlocked <strong>FREE UK delivery!</strong>';
-      msg.classList.add('lf-unlocked');
-      fill.style.width = '100%';
-      fill.classList.add('lf-full');
-    } else {
+ else {
       var rem = ((LF_SHIP_THRESHOLD - totalPence) / 100).toLocaleString('en-GB', { style: 'currency', currency: 'GBP' });
       msg.innerHTML = 'Spend <strong>' + rem + '</strong> more for FREE UK delivery';
       msg.classList.remove('lf-unlocked');
@@ -1235,10 +1057,7 @@
     return /extra free|extra-free|free[- ]?15ml|free-15ml|15ml[- ]?free|50% extra|15ml-bundle/.test(s);
   }
 
-  function updateMonkOffers(cart) {
-    var panel = document.getElementById('lf-monk-offers');
-    if (!panel) return;
-    if (!cart || cart.item_count === 0) { panel.classList.remove('lf-mo-visible'); return; }
+
     panel.classList.add('lf-mo-visible');
 
     var msg  = document.getElementById('lf-monk-gift-msg');
@@ -1288,11 +1107,7 @@
   }
 
   // ── Upsell strip ────────────────────────────────────────────────
-  function loadUpsells(cart) {
-    var wrap  = document.getElementById('lf-cart-upsells');
-    var strip = document.getElementById('lf-upsell-strip');
-    if (!wrap || !strip) return;
-    var inCart = cart.items.map(function(i) { return i.product_id; });
+;
     var pid = cart.items[0] && cart.items[0].product_id;
     if (!pid) { wrap.style.display = 'none'; return; }
     fetch('/recommendations/products.json?product_id=' + pid + '&limit=8&intent=related')
@@ -1441,21 +1256,17 @@
     });
   }
 
-  function lfQty(key, qty) {
-    if (qty < 0) return;
-    fetch('/cart/change.js', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+,
       body: JSON.stringify({ id: key, quantity: qty })
     }).then(function() { updateCartDrawer(); });
   }
 
-  function lfRemove(key) { lfQty(key, 0); }
+
 
   // Legacy alias kept for any external references
   function removeItem(key) { lfRemove(key); }
 
-  document.addEventListener('cart:refresh', openCart);
+  
 
   // Brand mega-menu: hover-reveal range flyout
   (function initBrandFlyout(){
@@ -1501,6 +1312,22 @@
   })();
 </script>
 
+<link rel="stylesheet" href="{{ 'ds-header-search.css' | asset_url }}" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="{{ 'component-predictive-search.css' | asset_url }}" media="print" onload="this.media='all'">
+<script src="{{ 'ds-header-search.js' | asset_url }}" defer="defer"></script>
+<script>
+  window.routes = {
+    cart_add_url: '{{ routes.cart_add_url }}',
+    cart_change_url: '{{ routes.cart_change_url }}',
+    cart_update_url: '{{ routes.cart_update_url }}',
+    cart_url: '{{ routes.cart_url }}',
+    predictive_search_url: '{{ routes.predictive_search_url }}',
+    search_url: '{{ routes.search_url }}'
+  };
+</script>
+<script src="{{ 'ds-dawn-utils.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'search-form.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'predictive-search.js' | asset_url }}" defer="defer"></script>
 {% schema %}
 {
 "name": "The Skin Bay Ultimate",
