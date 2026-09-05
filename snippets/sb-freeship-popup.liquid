@@ -1,0 +1,41 @@
+{%- comment -%} Free shipping over £100 popup. Red (announcement #ae2139), brand Recoleta+Sloop banner image, no timer, once per session. {%- endcomment -%}
+{%- unless request.design_mode -%}
+<div id="sb-fs-pop" class="sb-fs" hidden role="dialog" aria-modal="true" aria-label="Free UK shipping over 100 pounds">
+  <div class="sb-fs__backdrop" data-close></div>
+  <div class="sb-fs__card" role="document">
+    <button class="sb-fs__x" data-close aria-label="Close">&times;</button>
+    <img class="sb-fs__banner" src="{{ 'freeship-popup-banner.png' | asset_url }}" alt="Spend £100 and get free UK shipping" width="1200" height="660" loading="eager">
+    <p class="sb-fs__sub">Applied automatically at checkout &middot; UK mainland</p>
+    <a class="sb-fs__cta" href="/collections/sale" data-close>Shop Now</a>
+  </div>
+</div>
+<style>
+  .sb-fs{position:fixed;inset:0;z-index:99999;display:none;align-items:center;justify-content:center;padding:20px;}
+  .sb-fs.is-open{display:flex;}
+  .sb-fs__backdrop{position:absolute;inset:0;background:rgba(20,10,12,.55);backdrop-filter:blur(2px);}
+  .sb-fs__card{position:relative;width:100%;max-width:410px;background:#ae2139;border-radius:16px;padding:30px 28px 28px;
+    text-align:center;box-shadow:0 24px 70px rgba(0,0,0,.4);border:1px solid rgba(255,255,255,.14);
+    font-family:'Lato',var(--font-body--family),sans-serif;animation:sbfsPop .32s cubic-bezier(.2,.8,.3,1.1) both;}
+  @keyframes sbfsPop{from{opacity:0;transform:translateY(14px) scale(.97);}to{opacity:1;transform:none;}}
+  .sb-fs__x{position:absolute;top:11px;right:14px;background:none;border:none;color:#fff;opacity:.75;font-size:26px;line-height:1;cursor:pointer;padding:4px;}
+  .sb-fs__x:hover{opacity:1;}
+  .sb-fs__banner{display:block;width:100%;max-width:330px;height:auto;margin:4px auto 4px;}
+  .sb-fs__sub{font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.72);margin:0 0 20px;}
+  .sb-fs__cta{display:inline-block;background:#fff;color:#ae2139;font-weight:800;letter-spacing:.14em;text-transform:uppercase;
+    font-size:12.5px;padding:14px 34px;border-radius:40px;text-decoration:none;transition:transform .15s ease,background .2s ease;}
+  .sb-fs__cta:hover{transform:translateY(-1px);background:#fff4f4;}
+  @media (max-width:480px){ .sb-fs__card{padding:26px 20px 24px;} }
+</style>
+<script>
+  (function(){
+    var KEY='sbFsPopSeen';
+    try{ if(sessionStorage.getItem(KEY)) return; }catch(e){}
+    var pop=document.getElementById('sb-fs-pop'); if(!pop) return;
+    function open(){ pop.hidden=false; pop.classList.add('is-open'); try{sessionStorage.setItem(KEY,'1');}catch(e){} }
+    function close(){ pop.classList.remove('is-open'); pop.hidden=true; }
+    pop.addEventListener('click',function(e){ if(e.target.closest('[data-close]')) close(); });
+    document.addEventListener('keydown',function(e){ if(e.key==='Escape') close(); });
+    setTimeout(open, 1200);
+  })();
+</script>
+{%- endunless -%}

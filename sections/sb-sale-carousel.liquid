@@ -1,0 +1,96 @@
+{%- if section.settings.enabled -%}
+{%- assign coll = section.settings.collection -%}
+{%- if coll == blank -%}{%- assign coll = collections['sale'] -%}{%- endif -%}
+{%- assign tid = 'sbsc-' | append: section.id -%}
+<section class="sbsc">
+  <div class="sbsc__inner">
+    <div class="sbsc__head">
+      <span class="sbsc__eyebrow">{{ section.settings.eyebrow | default: 'Summer Sale · Still On' }}</span>
+      <div class="sbsc__title-wrap"><div class="sbsc__title" role="img" aria-label="{{ section.settings.heading | default: 'Last Chance to Save' }}" style="background-image:url({{ 'sale-heading.png' | asset_url }});"></div></div>
+      <p class="sbsc__sub">{{ section.settings.subheading | default: 'Grab these exclusive savings before they’re gone.' }}</p>
+    </div>
+    <div class="sbsc__track-wrap">
+      <button type="button" class="sbsc__nav sbsc__nav--prev" aria-label="Previous" onclick="sbscScroll('{{ tid }}',-1)">‹</button>
+      <div class="sbsc__track" id="{{ tid }}">
+        {%- assign shown = 0 -%}
+        {%- for product in coll.products -%}
+          {%- assign v = product.selected_or_first_available_variant -%}
+          {%- assign pct = 0 -%}
+          {%- if v.compare_at_price > v.price -%}{%- assign pct = v.compare_at_price | minus: v.price | times: 100.0 | divided_by: v.compare_at_price | round -%}{%- endif -%}
+          {%- if pct > 20 and shown < section.settings.limit -%}
+            {%- assign shown = shown | plus: 1 -%}
+            <a class="sbsc-card" href="{{ product.url }}">
+              <div class="sbsc-card__img">
+                {%- if product.featured_image != blank -%}<img src="{{ product.featured_image | image_url: width: 440 }}" alt="{{ product.title | escape }}" loading="lazy" width="440" height="440">{%- endif -%}
+                <span class="sbsc-card__badge">-{{ pct }}%</span>
+              </div>
+              <div class="sbsc-card__body">
+                {%- if product.vendor != blank -%}<span class="sbsc-card__vendor">{{ product.vendor }}</span>{%- endif -%}
+                <span class="sbsc-card__title">{{ product.title }}</span>
+                <span class="sbsc-card__price"><s>{{ v.compare_at_price | money }}</s> <b>{{ v.price | money }}</b></span>
+              </div>
+            </a>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+      <button type="button" class="sbsc__nav sbsc__nav--next" aria-label="Next" onclick="sbscScroll('{{ tid }}',1)">›</button>
+    </div>
+    <a class="sbsc__cta" href="{{ section.settings.cta_link | default: '/collections/sale' }}">{{ section.settings.cta_text | default: 'Shop All Sale' }}</a>
+  </div>
+</section>
+<style>
+  .sbsc{ padding:6px 20px 40px; }
+  .sbsc__inner{ max-width:1200px; margin:0 auto; background:#c8102e; border-top:3px solid #b8925a; border-radius:16px; padding:clamp(26px,3vw,40px) clamp(18px,2.5vw,34px) clamp(28px,3vw,38px); box-shadow:0 12px 36px rgba(150,10,25,.22); font-family:'Lato',var(--font-body--family),sans-serif; color:#fff; }
+  .sbsc__head{ text-align:center; padding:0 12px; margin-bottom:20px; }
+  .sbsc__eyebrow{ display:block; font-size:11px; font-weight:800; letter-spacing:.22em; text-transform:uppercase; color:#f6d79a; margin-bottom:8px; }
+  .sbsc__title-wrap{ width:400px; max-width:82%; margin:0 auto 10px; }
+  .sbsc__title{ width:100%; height:0; padding-bottom:32.23%; background-size:contain; background-position:center; background-repeat:no-repeat; }
+  .sbsc__sub{ font-size:14px; line-height:1.5; color:rgba(255,255,255,.9); margin:0; }
+  .sbsc__track-wrap{ position:relative; }
+  .sbsc__track{ display:flex; gap:14px; overflow-x:auto; scroll-snap-type:x mandatory; -webkit-overflow-scrolling:touch; scrollbar-width:none; padding:4px 2px; }
+  .sbsc__track::-webkit-scrollbar{ display:none; }
+  .sbsc-card{ flex:0 0 auto; width:210px; scroll-snap-align:start; background:#fff; border-radius:12px; overflow:hidden; text-decoration:none; box-shadow:0 4px 14px rgba(0,0,0,.12); transition:transform .15s ease; }
+  .sbsc-card:hover{ transform:translateY(-3px); }
+  .sbsc-card__img{ position:relative; aspect-ratio:1/1; background:#fff; }
+  .sbsc-card__img img{ width:100%; height:100%; object-fit:contain; display:block; }
+  .sbsc-card__badge{ position:absolute; top:9px; left:9px; background:#c8102e; color:#fff; font-size:13px; font-weight:800; letter-spacing:.02em; padding:5px 10px; border-radius:20px; box-shadow:0 2px 6px rgba(0,0,0,.2); }
+  .sbsc-card__body{ padding:11px 13px 14px; }
+  .sbsc-card__vendor{ display:block; font-size:9.5px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:#9a9384; margin-bottom:3px; }
+  .sbsc-card__title{ display:block; font-size:12.5px; line-height:1.35; color:#1a1a1a; font-weight:600; margin-bottom:8px; height:34px; overflow:hidden; }
+  .sbsc-card__price{ font-size:14px; }
+  .sbsc-card__price s{ color:#9a9384; margin-right:6px; font-size:12.5px; }
+  .sbsc-card__price b{ color:#c8102e; font-weight:800; }
+  .sbsc__nav{ position:absolute; top:50%; transform:translateY(-50%); z-index:2; width:38px; height:38px; border-radius:50%; border:none; background:#fff; color:#c8102e; font-size:22px; line-height:1; cursor:pointer; box-shadow:0 3px 10px rgba(0,0,0,.2); display:flex; align-items:center; justify-content:center; padding-bottom:3px; }
+  .sbsc__nav--prev{ left:-8px; } .sbsc__nav--next{ right:-8px; }
+  .sbsc__nav:hover{ background:#f4ece0; }
+  .sbsc__cta{ display:block; width:max-content; margin:22px auto 0; background:#fff; color:#c8102e; text-decoration:none; font-size:13px; font-weight:800; letter-spacing:.14em; text-transform:uppercase; padding:14px 42px; border-radius:40px; transition:transform .15s ease; }
+  .sbsc__cta:hover{ transform:translateY(-1px); }
+  @media (max-width:749px){
+    .sbsc{ padding:2px 12px 30px; }
+    .sbsc__inner{ padding:24px 16px 26px; }
+    .sbsc-card{ width:158px; }
+    .sbsc__nav{ display:none; }
+  }
+</style>
+<script>
+  function sbscScroll(id,dir){ var t=document.getElementById(id); if(!t) return; t.scrollBy({left:dir*(t.clientWidth*0.85),behavior:'smooth'}); }
+</script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Sale Carousel",
+  "tag": "section",
+  "settings": [
+    { "type": "checkbox", "id": "enabled", "label": "Show section", "default": true },
+    { "type": "collection", "id": "collection", "label": "Collection (defaults to Sale)" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Summer Sale · Still On" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Last Chance to Save" },
+    { "type": "text", "id": "subheading", "label": "Subheading", "default": "Grab these exclusive savings before they’re gone." },
+    { "type": "range", "id": "limit", "min": 6, "max": 24, "step": 1, "label": "Max products", "default": 16 },
+    { "type": "text", "id": "cta_text", "label": "Button text", "default": "Shop All Sale" },
+    { "type": "url", "id": "cta_link", "label": "Button link" }
+  ],
+  "presets": [ { "name": "Sale Carousel" } ]
+}
+{% endschema %}

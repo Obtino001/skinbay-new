@@ -1,0 +1,57 @@
+{%- assign g1   = section.settings.bg1  | default: '#0b1c3e' -%}
+{%- assign g2   = section.settings.bg2  | default: '#050e1f' -%}
+{%- assign gold = section.settings.gold | default: '#d4af37' -%}
+{%- assign link = section.settings.cta_link | default: '/pages/skinbay-loyalty-rewards' -%}
+{%- if section.settings.heading_image != blank -%}{%- assign bp_head = section.settings.heading_image | image_url: width: 760 -%}{%- else -%}{%- assign bp_head = 'baypoints-heading-dark.png' | asset_url -%}{%- endif -%}
+<style>
+.sbbp-{{ section.id }}{ background:linear-gradient(135deg,{{ g1 }} 0%,{{ g2 }} 100%); padding:26px 54px;
+  border-top:2px solid {{ gold }}; border-bottom:1px solid rgba(212,175,55,.4); font-family:'Lato',Helvetica,Arial,sans-serif; position:relative; overflow:hidden; }
+.sbbp-{{ section.id }}::before{ content:""; position:absolute; top:-60%; left:8%; width:340px; height:340px;
+  background:radial-gradient(circle,{{ gold }} 0%,transparent 70%); opacity:.10; pointer-events:none; }
+.sbbp-{{ section.id }} .in{ position:relative; max-width:1500px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; gap:40px; flex-wrap:wrap; }
+.sbbp-{{ section.id }} .lft{ display:flex; flex-direction:column; gap:9px; flex-shrink:0; }
+.sbbp-{{ section.id }} .ey{ font-family:'Playfair Display',Georgia,serif; font-size:12.5px; font-weight:600; letter-spacing:.3em; text-transform:uppercase; color:{{ gold }}; }
+.sbbp-{{ section.id }} .head-img{ height:72px; width:auto; display:block; }
+.sbbp-{{ section.id }} .vh{ position:absolute!important; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; border:0; }
+.sbbp-{{ section.id }} .mid{ display:flex; align-items:center; gap:22px; flex-wrap:wrap; justify-content:center; }
+.sbbp-{{ section.id }} .chip{ text-align:center; }
+.sbbp-{{ section.id }} .chip b{ display:block; font-family:'Playfair Display',Georgia,serif; font-weight:700; font-size:26px; color:{{ gold }}; line-height:1; text-shadow:0 0 10px rgba(212,175,55,.18); }
+.sbbp-{{ section.id }} .chip small{ display:block; font-size:10.5px; letter-spacing:.13em; text-transform:uppercase; color:rgba(255,255,255,.72); margin-top:4px; }
+.sbbp-{{ section.id }} .sep{ color:{{ gold }}; font-size:13px; opacity:.9; }
+.sbbp-{{ section.id }} .cta{ display:inline-block; background:{{ gold }}; color:{{ g1 }}; text-decoration:none; font-size:12px; font-weight:800; letter-spacing:.15em; text-transform:uppercase; padding:15px 34px; border-radius:40px; box-shadow:0 8px 22px rgba(212,175,55,.3); flex-shrink:0; transition:transform .15s ease, box-shadow .2s ease, filter .2s ease; }
+.sbbp-{{ section.id }} .cta:hover{ transform:translateY(-1px); box-shadow:0 12px 28px rgba(212,175,55,.42); filter:brightness(1.05); }
+@media (max-width:1080px){ .sbbp-{{ section.id }} .in{ justify-content:center; text-align:center; gap:22px; } .sbbp-{{ section.id }} .lft{ align-items:center; } }
+@media (max-width:749px){ .sbbp-{{ section.id }} .head-img{ height:58px; } .sbbp-{{ section.id }} .mid{ gap:14px; } .sbbp-{{ section.id }} .chip b{ font-size:21px; } }
+</style>
+<div class="sbbp-{{ section.id }}">
+  <div class="in">
+    <div class="lft">
+      <span class="ey">{{ section.settings.eyebrow | default: 'Earn as you shop' }}</span>
+      <img class="head-img" src="{{ bp_head }}" alt="BayPoints Rewards" width="760" height="171" loading="lazy">
+      <h2 class="vh">BayPoints Rewards</h2>
+    </div>
+    <div class="mid">
+      <div class="chip"><b>£2</b><small>= 1 point</small></div>
+      <span class="sep" aria-hidden="true">&#10022;</span>
+      <div class="chip"><b>100</b><small>points</small></div>
+      <span class="sep" aria-hidden="true">&#10022;</span>
+      <div class="chip"><b>£5</b><small>off your order</small></div>
+    </div>
+    <a class="cta" href="{{ link }}">{{ section.settings.cta_text | default: 'Join BayPoints' }}</a>
+  </div>
+</div>
+{% schema %}
+{
+  "name": "BayPoints Rewards",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Earn as you shop" },
+    { "type": "image_picker", "id": "heading_image", "label": "Heading graphic (blank = default)" },
+    { "type": "text", "id": "cta_text", "label": "Button text", "default": "Join BayPoints" },
+    { "type": "url", "id": "cta_link", "label": "Button link (defaults to rewards page)" },
+    { "type": "color", "id": "bg1", "label": "Background top", "default": "#0b1c3e" },
+    { "type": "color", "id": "bg2", "label": "Background bottom", "default": "#050e1f" },
+    { "type": "color", "id": "gold", "label": "Gold accent", "default": "#d4af37" }
+  ],
+  "presets": [{ "name": "BayPoints Rewards" }]
+}
+{% endschema %}

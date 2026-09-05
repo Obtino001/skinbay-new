@@ -1,0 +1,92 @@
+{%- if section.settings.enabled -%}
+<section class="sbgf">
+  <div class="sbgf__inner">
+    <img class="sbgf__bag" src="{{ 'goldbag-gift.png' | asset_url }}" alt="Complimentary Bank Holiday Gold Bag gift" width="440" height="440" loading="lazy">
+    <div class="sbgf__text">
+      <span class="sbgf__eyebrow">Bank Holiday Exclusive &middot; Ends Midnight Tuesday</span>
+      <div class="sbgf__title-wrap"><div class="sbgf__title" role="img" aria-label="Our Best Gift Yet" style="background-image:url({{ 'bh-heading.png' | asset_url }});"></div></div>
+      <div class="sbgf__perks">
+        <div class="sbgf__perk">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="1" y="6" width="14" height="10" rx="1"/><path d="M15 9h4l3 3v4h-7z"/><circle cx="5.5" cy="18" r="1.6"/><circle cx="18" cy="18" r="1.6"/></svg>
+          <span>Free <strong>48-hour delivery</strong> on orders over &pound;150</span>
+        </div>
+        <div class="sbgf__perk">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12v9H4v-9"/><path d="M2 7h20v5H2z"/><path d="M12 22V7"/><path d="M12 7S10.5 3 8 3a2.5 2.5 0 0 0 0 5m4-1s1.5-4 4-4a2.5 2.5 0 0 1 0 5"/></svg>
+          <span>Complimentary <strong>Gold Bag gift</strong> on orders over &pound;150</span>
+        </div>
+      </div>
+    </div>
+    <div class="sbgf__action">
+      <span class="sbgf__ends">Offer ends in</span>
+      <div class="sbgf__timer" id="sbgf-timer">
+        <div class="sbgf__unit"><span id="sbgf-d">00</span><small>Days</small></div>
+        <div class="sbgf__unit"><span id="sbgf-h">00</span><small>Hrs</small></div>
+        <div class="sbgf__unit"><span id="sbgf-m">00</span><small>Min</small></div>
+        <div class="sbgf__unit"><span id="sbgf-s">00</span><small>Sec</small></div>
+      </div>
+      <a class="sbgf__cta" href="{{ section.settings.cta_link | default: '/collections/sale' }}">{{ section.settings.cta_text | default: 'Shop the Sale' }}</a>
+      <p class="sbgf__fine">Excludes SkinCeuticals</p>
+    </div>
+  </div>
+</section>
+<style>
+  .sbgf{ padding:10px 20px 36px; }
+  .sbgf__inner{ max-width:1120px; margin:0 auto; display:flex; align-items:center; gap:clamp(22px,3vw,46px); background:#F9F3ED; border-top:3px solid #b8925a; border-radius:16px; padding:clamp(28px,3vw,40px) clamp(30px,4vw,56px); box-shadow:0 10px 34px rgba(0,0,0,.07); font-family:'Lato',var(--font-body--family),sans-serif; }
+  .sbgf__bag{ flex:0 0 auto; width:clamp(150px,14vw,200px) !important; height:auto !important; object-fit:contain; display:block; filter:drop-shadow(0 8px 18px rgba(0,0,0,.18)); }
+  .sbgf__text{ flex:1 1 auto; min-width:0; }
+  .sbgf__eyebrow{ display:block; font-size:11px; font-weight:800; letter-spacing:.2em; text-transform:uppercase; color:#b8925a; margin-bottom:9px; }
+  .sbgf__title-wrap{ width:300px !important; max-width:100% !important; margin:0 0 16px !important; }
+  .sbgf__title{ width:100% !important; height:0 !important; padding-bottom:47.67% !important; background-size:contain !important; background-position:left center !important; background-repeat:no-repeat !important; }
+  .sbgf__perks{ display:flex; flex-direction:column; gap:9px; }
+  .sbgf__perk{ display:flex; align-items:center; gap:10px; font-size:14.5px; color:#3f3a33; }
+  .sbgf__perk strong{ color:#0c0c0c; font-weight:700; }
+  .sbgf__perk svg{ flex-shrink:0; width:22px; height:22px; color:#b8925a; }
+  .sbgf__action{ flex:0 0 auto; display:flex; flex-direction:column; align-items:center; gap:14px; padding-left:clamp(10px,2vw,30px); border-left:1px solid #e7dcc6; }
+  .sbgf__ends{ font-size:10px; font-weight:700; letter-spacing:.18em; text-transform:uppercase; color:#8a8478; }
+  .sbgf__timer{ display:flex; gap:8px; }
+  .sbgf__unit{ background:#0c0c0c; color:#fff; border-radius:9px; padding:9px 0 7px; width:60px; text-align:center; }
+  .sbgf__unit span{ display:block; font-family:'Playfair Display',Georgia,serif; font-size:25px; font-weight:600; line-height:1; }
+  .sbgf__unit small{ display:block; font-size:8.5px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:#c9a96e; margin-top:5px; }
+  .sbgf__cta{ display:inline-block; background:#c8102e; color:#fff; text-decoration:none; font-size:13px; font-weight:800; letter-spacing:.14em; text-transform:uppercase; padding:15px 44px; border-radius:40px; white-space:nowrap; transition:filter .15s ease; }
+  .sbgf__cta:hover{ filter:brightness(1.08); }
+  .sbgf__fine{ font-size:9.5px; letter-spacing:.09em; text-transform:uppercase; color:#8a8478; margin:2px 0 0; }
+  @media (max-width:899px){
+    .sbgf{ padding:6px 14px 28px; }
+    .sbgf__inner{ flex-direction:column; text-align:center; gap:16px; padding:28px 22px 26px; }
+    .sbgf__text{ display:flex; flex-direction:column; align-items:center; }
+    .sbgf__title-wrap{ margin:0 auto 14px !important; width:250px !important; }
+    .sbgf__title{ background-position:center !important; }
+    .sbgf__perks{ align-items:flex-start; }
+    .sbgf__action{ border-left:none; padding-left:0; }
+    .sbgf__bag{ width:130px !important; margin:0 auto; }
+  }
+</style>
+<script>
+(function(){
+  var END=new Date('2026-09-01T00:00:00+01:00').getTime(); // 00:00 Tue 1 Sep BST = end of Bank Holiday Monday
+  var t=document.getElementById('sbgf-timer'); if(!t) return;
+  function pad(n){return (n<10?'0':'')+n;}
+  function up(){
+    var diff=END-Date.now();
+    if(diff<=0){ t.style.display='none'; return; }
+    var d=Math.floor(diff/86400000),h=Math.floor(diff%86400000/3600000),m=Math.floor(diff%3600000/60000),s=Math.floor(diff%60000/1000);
+    var E=function(id,v){var el=document.getElementById(id); if(el) el.textContent=pad(v);};
+    E('sbgf-d',d);E('sbgf-h',h);E('sbgf-m',m);E('sbgf-s',s);
+  }
+  up(); setInterval(up,1000);
+})();
+</script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Gold Bag Gift Feature",
+  "tag": "section",
+  "settings": [
+    { "type": "checkbox", "id": "enabled", "label": "Show section", "default": true },
+    { "type": "text", "id": "cta_text", "label": "Button text", "default": "Shop the Sale" },
+    { "type": "url", "id": "cta_link", "label": "Button link" }
+  ],
+  "presets": [ { "name": "Gold Bag Gift Feature" } ]
+}
+{% endschema %}

@@ -1,0 +1,51 @@
+{%- liquid
+  assign bg = section.settings.bg_color | default: '#c8102e'
+  assign fg = section.settings.text_color | default: '#ffffff'
+-%}
+{%- if section.settings.enabled -%}
+<a class="sb-sale-strip" href="{{ section.settings.cta_link | default: '/collections/sale' }}" style="--ss-bg:{{ bg }};--ss-fg:{{ fg }};">
+  <span class="sb-ss-inner">
+    {%- if section.settings.line1 != blank -%}<span class="sb-ss-lead">{{ section.settings.line1 }}</span>{%- endif -%}
+    {%- if section.settings.line2 != blank -%}<span class="sb-ss-dot" aria-hidden="true">&bull;</span><span class="sb-ss-mid">{{ section.settings.line2 }}</span>{%- endif -%}
+    {%- if section.settings.line3 != blank -%}<span class="sb-ss-dot" aria-hidden="true">&bull;</span><span class="sb-ss-mid">{{ section.settings.line3 }}</span>{%- endif -%}
+    {%- if section.settings.cta_text != blank -%}
+      <span class="sb-ss-cta">{{ section.settings.cta_text }}
+        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </span>
+    {%- endif -%}
+  </span>
+</a>
+{%- endif -%}
+
+{% stylesheet %}
+  .sb-sale-strip{display:block;background:var(--ss-bg);color:var(--ss-fg);text-decoration:none;padding:15px 20px;transition:filter .15s ease;}
+  .sb-sale-strip:hover{filter:brightness(1.08);}
+  .sb-ss-inner{max-width:1500px;margin:0 auto;display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:8px 16px;font-family:'Lato',sans-serif;text-transform:uppercase;letter-spacing:.14em;font-size:14px;line-height:1;text-align:center;}
+  .sb-ss-lead{font-weight:800;}
+  .sb-ss-mid{font-weight:600;}
+  .sb-ss-dot{opacity:.55;font-weight:400;}
+  .sb-ss-cta{display:inline-flex;align-items:center;gap:6px;font-weight:800;border-bottom:2px solid currentColor;padding-bottom:2px;margin-left:4px;}
+  @media (max-width:749px){
+    .sb-ss-inner{font-size:11px;letter-spacing:.1em;gap:6px 10px;}
+    .sb-ss-dot{display:none;}
+    .sb-sale-strip{padding:12px 14px;}
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Sale Strip",
+  "tag": "section",
+  "settings": [
+    { "type": "checkbox", "id": "enabled", "label": "Show sale strip", "default": true },
+    { "type": "text", "id": "line1", "label": "Lead (bold)", "default": "BANK HOLIDAY SALE" },
+    { "type": "text", "id": "line2", "label": "Message 2", "default": "UP TO 20% OFF" },
+    { "type": "text", "id": "line3", "label": "Message 3", "default": "FREE SHIPPING & GIFT OVER £150" },
+    { "type": "text", "id": "cta_text", "label": "Call to action", "default": "SHOP THE SALE" },
+    { "type": "url", "id": "cta_link", "label": "Link" },
+    { "type": "color", "id": "bg_color", "label": "Background", "default": "#c8102e" },
+    { "type": "color", "id": "text_color", "label": "Text", "default": "#ffffff" }
+  ],
+  "presets": [ { "name": "Sale Strip" } ]
+}
+{% endschema %}

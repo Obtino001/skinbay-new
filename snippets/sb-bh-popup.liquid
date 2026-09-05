@@ -1,0 +1,90 @@
+{%- comment -%} Bank Holiday Exclusive popup — once per session, countdown to end of Mon 31 Aug (00:00 Tue 1 Sep BST). Change END in the script to adjust. {%- endcomment -%}
+{%- unless request.design_mode -%}
+<div id="sb-bh-pop" class="sb-bh" hidden aria-hidden="true" role="dialog" aria-modal="true" aria-label="Bank Holiday Exclusive">
+  <div class="sb-bh__backdrop" data-close></div>
+  <div class="sb-bh__card">
+    <button class="sb-bh__x" data-close aria-label="Close">&times;</button>
+    <img class="sb-bh__bag" src="{{ 'goldbag-gift.png' | asset_url }}" alt="" width="440" height="440">
+    <p class="sb-bh__eyebrow">Bank Holiday Exclusive</p>
+    <div class="sb-bh__title-wrap">
+      <div class="sb-bh__title" role="img" aria-label="Our Best Gift Yet" style="background-image:url({{ 'bh-heading.png' | asset_url }});"></div>
+    </div>
+    <div class="sb-bh__perks">
+      <div class="sb-bh__perk">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="1" y="6" width="14" height="10" rx="1"/><path d="M15 9h4l3 3v4h-7z"/><circle cx="5.5" cy="18" r="1.6"/><circle cx="18" cy="18" r="1.6"/></svg>
+        <span>Free <strong>48-hour delivery</strong> on orders over &pound;150</span>
+      </div>
+      <div class="sb-bh__perk">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12v9H4v-9"/><path d="M2 7h20v5H2z"/><path d="M12 22V7"/><path d="M12 7S10.5 3 8 3a2.5 2.5 0 0 0 0 5m4-1s1.5-4 4-4a2.5 2.5 0 0 1 0 5"/></svg>
+        <span>Complimentary <strong>Gold Bag gift</strong> on orders over &pound;150</span>
+      </div>
+    </div>
+    <p class="sb-bh__ends">Offer ends in</p>
+    <div class="sb-bh__timer" aria-live="off">
+      <div class="sb-bh__unit"><span id="sb-bh-d">00</span><small>Days</small></div>
+      <div class="sb-bh__unit"><span id="sb-bh-h">00</span><small>Hrs</small></div>
+      <div class="sb-bh__unit"><span id="sb-bh-m">00</span><small>Min</small></div>
+      <div class="sb-bh__unit"><span id="sb-bh-s">00</span><small>Sec</small></div>
+    </div>
+    <a class="sb-bh__cta" href="/collections/sale" data-close>Shop the Sale</a>
+    <p class="sb-bh__fine">Ends midnight Tuesday &middot; Excludes SkinCeuticals</p>
+  </div>
+</div>
+<style>
+  .sb-bh{position:fixed;inset:0;z-index:99999;display:flex;align-items:center;justify-content:center;padding:20px;font-family:'Lato',var(--font-body--family),sans-serif;}
+  .sb-bh[hidden]{display:none;}
+  .sb-bh__backdrop{position:absolute;inset:0;background:rgba(12,12,12,.62);backdrop-filter:blur(3px);animation:sbbhFade .3s ease;}
+  .sb-bh__card{position:relative;z-index:1;width:100%;max-width:436px;background:#F9F3ED;border-radius:12px;padding:30px 34px 24px;text-align:center;box-shadow:0 24px 70px rgba(0,0,0,.4);border-top:3px solid #b8925a;animation:sbbhPop .38s cubic-bezier(.2,.9,.3,1.2);}
+  .sb-bh__x{position:absolute;top:12px;right:14px;background:none;border:none;font-size:26px;line-height:1;color:#8a8478;cursor:pointer;padding:4px;transition:color .15s ease;}
+  .sb-bh__x:hover{color:#0c0c0c;}
+  .sb-bh__bag{width:88px !important;height:88px !important;object-fit:contain;margin:0 auto 4px;display:block;filter:drop-shadow(0 4px 8px rgba(0,0,0,.18));}
+  .sb-bh__eyebrow{font-size:11px;font-weight:800;letter-spacing:.22em;text-transform:uppercase;color:#b8925a;margin:0 0 8px;}
+  .sb-bh__title-wrap{width:210px !important;max-width:64% !important;margin:8px auto 16px !important;}
+  .sb-bh__title{width:100% !important;height:0 !important;padding-bottom:47.67% !important;background-size:contain !important;background-position:center !important;background-repeat:no-repeat !important;}
+  .sb-bh__perks{display:inline-flex;flex-direction:column;gap:9px;margin:0 auto 18px;text-align:left;}
+  .sb-bh__perk{display:flex;align-items:center;gap:10px;font-size:13px;color:#3f3a33;line-height:1.35;}
+  .sb-bh__perk strong{color:#0c0c0c;font-weight:700;}
+  .sb-bh__perk svg{flex-shrink:0;width:20px;height:20px;color:#b8925a;}
+  .sb-bh__ends{font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:#8a8478;margin:0 0 8px;}
+  .sb-bh__timer{display:flex;justify-content:center;gap:8px;margin:0 0 20px;}
+  .sb-bh__unit{background:#0c0c0c;color:#fff;border-radius:8px;padding:9px 0 7px;width:60px;}
+  .sb-bh__unit span{display:block;font-family:'Playfair Display',Georgia,serif;font-size:26px;font-weight:600;line-height:1;letter-spacing:.02em;}
+  .sb-bh__unit small{display:block;font-size:8.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#c9a96e;margin-top:5px;}
+  .sb-bh__cta{display:block;background:#c8102e;color:#fff;text-decoration:none;font-size:13px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;padding:15px;border-radius:40px;transition:filter .15s ease;}
+  .sb-bh__cta:hover{filter:brightness(1.08);}
+  .sb-bh__fine{font-size:10px;letter-spacing:.06em;color:#8a8478;margin:12px 0 0;text-transform:uppercase;}
+  @keyframes sbbhFade{from{opacity:0}to{opacity:1}}
+  @keyframes sbbhPop{from{opacity:0;transform:translateY(14px) scale(.96)}to{opacity:1;transform:none}}
+  @media(max-width:480px){.sb-bh__card{padding:26px 20px 20px;}.sb-bh__title{max-width:240px;}.sb-bh__unit{width:54px;}.sb-bh__unit span{font-size:23px;}.sb-bh__perk{font-size:12px;}}
+</style>
+<script>
+(function(){
+  var KEY='sb_bh_pop_seen';
+  var END=new Date('2026-09-01T00:00:00+01:00').getTime(); // 00:00 Tue 1 Sep BST = end of Bank Holiday Monday
+  var pop=document.getElementById('sb-bh-pop');
+  if(!pop) return;
+  if(Date.now()>=END){ return; }
+  var tick;
+  function pad(n){return (n<10?'0':'')+n;}
+  function update(){
+    var diff=END-Date.now();
+    if(diff<=0){ clearInterval(tick); close(); return; }
+    var d=Math.floor(diff/86400000), h=Math.floor(diff%86400000/3600000), m=Math.floor(diff%3600000/60000), s=Math.floor(diff%60000/1000);
+    var E=function(id,v){var el=document.getElementById(id); if(el) el.textContent=pad(v);};
+    E('sb-bh-d',d);E('sb-bh-h',h);E('sb-bh-m',m);E('sb-bh-s',s);
+  }
+  function close(){ pop.setAttribute('hidden',''); pop.setAttribute('aria-hidden','true'); document.removeEventListener('keydown',onKey); }
+  function onKey(e){ if(e.key==='Escape') close(); }
+  function open(){
+    pop.removeAttribute('hidden'); pop.setAttribute('aria-hidden','false');
+    update(); tick=setInterval(update,1000);
+    document.addEventListener('keydown',onKey);
+    pop.querySelectorAll('[data-close]').forEach(function(el){ el.addEventListener('click',close); });
+  }
+  var seen; try{ seen=sessionStorage.getItem(KEY); }catch(e){}
+  if(seen) return;
+  try{ sessionStorage.setItem(KEY,'1'); }catch(e){}
+  setTimeout(open,900);
+})();
+</script>
+{%- endunless -%}

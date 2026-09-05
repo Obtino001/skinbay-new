@@ -1,0 +1,28 @@
+{%- comment -%} Gold Bag gift feature. variant 'dt' (desktop) / 'mb' (mobile). Editable via NAD · Hero section settings. Hidden on SkinCeuticals. {%- endcomment -%}
+{%- unless product.vendor == 'SkinCeuticals' -%}
+{%- assign gb_img = 'goldbag-gift.png' | asset_url -%}
+{%- if image != blank -%}{%- assign gb_img = image | image_url: width: 440 -%}{%- endif -%}
+{%- assign gb_head = 'bh-heading.png' | asset_url -%}
+{%- if heading != blank -%}{%- assign gb_head = heading | image_url: width: 400 -%}{%- endif -%}
+{%- assign gb_bg = bg | default: '#F9F3ED' -%}
+{%- assign gb_accent = accent | default: '#B8925A' -%}
+<div class="sbg sbg--{{ variant | default: 'dt' }}" style="--sbg-bg:{{ gb_bg }};--sbg-accent:{{ gb_accent }};">
+  <img class="sbg__bag" src="{{ gb_img }}" alt="" width="440" height="440" loading="lazy">
+  {%- if eyebrow != blank -%}<span class="sbg__eyebrow">{{ eyebrow }}</span>{%- endif -%}
+  <div class="sbg__title-wrap"><div class="sbg__title" role="img" aria-label="Gold Bag Gift" style="background-image:url({{ gb_head }});"></div></div>
+  {%- if sub != blank -%}<div class="sbg__sub">{{ sub }}</div>{%- endif -%}
+  {%- if fine != blank -%}<p class="sbg__fine">{{ fine }}</p>{%- endif -%}
+</div>
+<style>
+  .sbg{ text-align:center; background:var(--sbg-bg,#F9F3ED); border-top:3px solid var(--sbg-accent,#b8925a); border-radius:10px; padding:20px 22px 15px; margin:16px 0 4px; font-family:'Lato',var(--font-body--family),sans-serif; box-shadow:0 6px 20px rgba(0,0,0,.06); }
+  .sbg--mb{ display:none; }
+  .sbg__bag{ width:72px !important; height:72px !important; object-fit:contain; display:block; margin:0 auto 6px; filter:drop-shadow(0 4px 8px rgba(0,0,0,.16)); }
+  .sbg__eyebrow{ display:block; font-size:9.5px; font-weight:800; letter-spacing:.15em; text-transform:uppercase; color:var(--sbg-accent,#b8925a); margin-bottom:8px; }
+  .sbg__title-wrap{ width:172px !important; max-width:76% !important; margin:2px auto 12px !important; }
+  .sbg__title{ width:100% !important; height:0 !important; padding-bottom:47.67% !important; background-size:contain !important; background-position:center !important; background-repeat:no-repeat !important; }
+  .sbg__sub{ font-size:12px; line-height:1.5; color:#4a4a4a; margin:0 auto 6px; max-width:290px; }
+  .sbg__sub strong{ color:#0c0c0c; font-weight:700; } .sbg__sub p{ margin:0 auto 6px; }
+  .sbg__fine{ font-size:9px; letter-spacing:.09em; text-transform:uppercase; color:#8a8478; margin:0; }
+  @media (max-width:849px){ .sbg--dt{ display:none; } .sbg--mb{ display:block; } .nadh-mreorder .sbg--mb{ order:9; } }
+</style>
+{%- endunless -%}
