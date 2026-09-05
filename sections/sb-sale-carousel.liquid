@@ -6,7 +6,7 @@
   <div class="sbsc__inner">
     <div class="sbsc__head">
       <span class="sbsc__eyebrow">{{ section.settings.eyebrow | default: 'Summer Sale · Still On' }}</span>
-      <div class="sbsc__title-wrap"><div class="sbsc__title" role="img" aria-label="{{ section.settings.heading | default: 'Last Chance to Save' }}" style="background-image:url({{ 'sale-heading.png' | asset_url }});"></div></div>
+      <div class="sbsc__title-wrap"><div class="sbsc__title" role="img" aria-label="{{ section.settings.heading | default: 'Last Chance to Save' }}" style="background-image:url({{ 'sale-heading.png' | file_url }});"></div></div>
       <p class="sbsc__sub">{{ section.settings.subheading | default: 'Grab these exclusive savings before they’re gone.' }}</p>
     </div>
     <div class="sbsc__track-wrap">

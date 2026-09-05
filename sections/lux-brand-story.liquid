@@ -37,7 +37,7 @@
         {%- endif -%}
         {%- if founder != blank -%}
         <div class="bstory-panel bstory-panel-founder" data-panel="founder">
-          <div class="bstory-founder-img"><img src="{{ 'founder-emmalee.webp' | asset_url }}" alt="Emmalee Fitton, Founder" loading="lazy" onerror="this.parentNode.style.display='none'"></div>
+          <div class="bstory-founder-img"><img src="{{ 'founder-emmalee.webp' | file_url }}" alt="Emmalee Fitton, Founder" loading="lazy" onerror="this.parentNode.style.display='none'"></div>
           <div class="bstory-founder-copy">
             <div class="bstory-founder-body">{% render 'phc-richtext', rt: founder.value %}</div>
             <p class="bstory-sign">, Emmalee, Founder of The Skin Bay</p>

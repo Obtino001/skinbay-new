@@ -174,7 +174,7 @@
         {% if section.settings.subtitle != blank %}
           <span class="sb-subtitle">{{ section.settings.subtitle }}</span>
         {% endif %}
-        <img class="mn-hbanner-left" src="{{ 'mn-h-title.png' | asset_url }}" alt="Microneedling">
+        <img class="mn-hbanner-left" src="{{ 'mn-h-title.png' | file_url }}" alt="Microneedling">
         <h1 class="sb-title mn-hvh">{{ section.settings.title }}</h1>
         <div class="sb-body">{{ section.settings.intro_text }}</div>
         {% if section.settings.show_cta %}
@@ -192,7 +192,7 @@
 
     <!-- What is it Section -->
     <div style="margin-top: 5rem;">
-      <img class="mn-hbanner" src="{{ 'mn-h-def.png' | asset_url }}" alt="What is Microneedling?">
+      <img class="mn-hbanner" src="{{ 'mn-h-def.png' | file_url }}" alt="What is Microneedling?">
       <h2 class="sb-heading-2 mn-hvh" style="text-align: center;">{{ section.settings.definition_title }}</h2>
       <div class="sb-body" style="max-width: 800px; margin: 0 auto; text-align: center;">
         {{ section.settings.definition_text }}
@@ -201,7 +201,7 @@
 
     <!-- Benefits Grid -->
     <div style="margin-top: 5rem;">
-      <img class="mn-hbanner" src="{{ 'mn-h-ben.png' | asset_url }}" alt="Skin Concerns Microneedling Treats">
+      <img class="mn-hbanner" src="{{ 'mn-h-ben.png' | file_url }}" alt="Skin Concerns Microneedling Treats">
       <h2 class="sb-heading-2 mn-hvh" style="text-align: center;">{{ section.settings.benefits_title }}</h2>
       <div class="sb-grid-3">
         {% for block in section.blocks %}
@@ -215,7 +215,7 @@
 
     <!-- Safety & Recovery -->
     <div style="margin-top: 5rem; background: {{ section.settings.card_bg }}; padding: 3rem; border: 1px solid {{ section.settings.border_color }};">
-      <img class="mn-hbanner" src="{{ 'mn-h-recovery.png' | asset_url }}" alt="Recovery &amp; Aftercare">
+      <img class="mn-hbanner" src="{{ 'mn-h-recovery.png' | file_url }}" alt="Recovery &amp; Aftercare">
       <h2 class="sb-heading-2 mn-hvh" style="margin-top: 0; text-align: center;">{{ section.settings.recovery_title }}</h2>
       <div class="sb-body" style="text-align: center; max-width: 800px; margin: 0 auto;">
         {{ section.settings.recovery_text }}

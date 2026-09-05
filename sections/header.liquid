@@ -767,7 +767,7 @@
 
       <div class="lf-logo-wrap">
         <a href="/">
-          {%- if section.settings.logo_image != blank -%}<img src="{{ section.settings.logo_image | image_url: width: 600 }}" alt="{{ shop.name }}">{%- else -%}<img src="{{ 'TheSkinBay Logo.png' | asset_url }}" alt="{{ shop.name }}">{%- endif -%}
+          {%- if section.settings.logo_image != blank -%}<img src="{{ section.settings.logo_image | image_url: width: 600 }}" alt="{{ shop.name }}">{%- else -%}<img src="{{ 'TheSkinBay Logo.png' | file_url }}" alt="{{ shop.name }}">{%- endif -%}
         </a>
       </div>
 

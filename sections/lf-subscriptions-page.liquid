@@ -202,7 +202,7 @@
   <section class="lf-sub-sec lf-sub-sec-white">
     <div class="lf-sub-inner">
       <span class="lf-sub-sec-eyebrow">How it works</span>
-      <img class="lf-sub-banner-int" src="{{ 'subs-h-setup.png' | asset_url }}" alt="Set it up once, never run out.">
+      <img class="lf-sub-banner-int" src="{{ 'subs-h-setup.png' | file_url }}" alt="Set it up once, never run out.">
       <h2 class="lf-sub-sec-heading lf-sub-vh">Set it up once, <em>never run out.</em></h2>
       <div class="lf-sub-grid">
         <div class="lf-sub-card">
@@ -228,7 +228,7 @@
   <section class="lf-sub-sec lf-sub-sec-cream">
     <div class="lf-sub-inner">
       <span class="lf-sub-sec-eyebrow">Your subscriptions</span>
-      <img class="lf-sub-banner-int" src="{{ 'subs-h-manage.png' | asset_url }}" alt="View, change or cancel any time.">
+      <img class="lf-sub-banner-int" src="{{ 'subs-h-manage.png' | file_url }}" alt="View, change or cancel any time.">
       <h2 class="lf-sub-sec-heading lf-sub-vh">View, change or cancel <em>any time.</em></h2>
 
       <div class="lf-sub-portal-cta">
@@ -304,7 +304,7 @@
   <section class="lf-sub-sec lf-sub-sec-white">
     <div class="lf-sub-faq-inner">
       <span class="lf-sub-sec-eyebrow">Good to know</span>
-      <img class="lf-sub-banner-int" src="{{ 'subs-h-questions.png' | asset_url }}" alt="Subscription questions.">
+      <img class="lf-sub-banner-int" src="{{ 'subs-h-questions.png' | file_url }}" alt="Subscription questions.">
       <h2 class="lf-sub-sec-heading lf-sub-vh">Subscription <em>questions.</em></h2>
 
       <details class="lf-sub-faq">
@@ -352,7 +352,7 @@
 
   {%- comment -%}── Bottom CTA ──────────────────────────────────{%- endcomment -%}
   <section class="lf-sub-cta">
-    <img class="lf-sub-banner-int" src="{{ 'subs-h-cta.png' | asset_url }}" alt="Never run out again." style="margin-bottom:20px;">
+    <img class="lf-sub-banner-int" src="{{ 'subs-h-cta.png' | file_url }}" alt="Never run out again." style="margin-bottom:20px;">
     <h2 class="lf-sub-cta-heading lf-sub-vh">Never run out <em>again.</em></h2>
     <p class="lf-sub-cta-body">{{ section.settings.cta_body }}</p>
     <a href="{{ portal_link }}" class="lf-sub-cta-btn lf-sub-cta-btn-solid">{% if customer %}Manage My Subscriptions{% else %}Log In to Manage{% endif %}</a>

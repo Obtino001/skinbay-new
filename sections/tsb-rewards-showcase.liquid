@@ -14,7 +14,7 @@
   <div class="tsb-rs__inner">
     {%- render 'sb-brand-heading', image: 'rwd-h-showcase.png', text: 'Track your BayPoints anytime', tag: 'h2', max: 420 -%}
     <span class="tsb-rs__frame">
-      <img src="{{ section.settings.image_asset | default: 'rewards-baypoints.jpg' | asset_url }}"
+      <img src="{{ section.settings.image_asset | default: 'rewards-baypoints.jpg' | file_url }}"
            alt="{{ section.settings.image_alt | escape }}" loading="lazy" width="900" height="900">
     </span>
     {%- if section.settings.caption != blank -%}

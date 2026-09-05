@@ -2,7 +2,7 @@
 <section class="nad-statement" style="background:{{ section.settings.bg }};">
   <div class="nadst-wrap">
     <h2 style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;padding:0;margin:-1px;border:0;">{{ section.settings.hidden_heading }}</h2>
-    <img class="nadst-banner" src="{{ 'nad-h-statement.png' | asset_url }}" alt="{{ section.settings.hidden_heading | escape }}" loading="lazy" width="1500" height="720">
+    <img class="nadst-banner" src="{{ 'nad-h-statement.png' | file_url }}" alt="{{ section.settings.hidden_heading | escape }}" loading="lazy" width="1500" height="720">
     {%- if section.settings.lede != blank -%}
       <p class="nadst-lede">{{ section.settings.lede }}</p>
     {%- endif -%}

@@ -36,7 +36,7 @@
         {%- if product.vendor != blank -%}<span class="nadh-eyebrow">{{ product.vendor }}</span>{%- endif -%}
         <h1 class="nadh-title nadh-title--lg">{{ product.title }}</h1>
       {%- else -%}
-        <img class="nadh-banner" src="{{ section.settings.header_image | default: 'nad-h-hero.png' | asset_url }}" alt="{{ product.title | escape }}" width="1500" height="340">
+        <img class="nadh-banner" src="{{ section.settings.header_image | default: 'nad-h-hero.png' | file_url }}" alt="{{ product.title | escape }}" width="1500" height="340">
         <h1 class="nadh-title">{{ product.title }}</h1>
       {%- endif -%}
       {%- assign nad_tag = section.settings.tagline -%}
@@ -176,14 +176,16 @@
     if(!m)return;
     var now=document.getElementById('nadprice-'+sid);if(now)now.textContent=nadMoney(m.price);
     var was=document.getElementById('nadwas-'+sid);if(was){if(m.compare_at_price&&m.compare_at_price>m.price){was.textContent=nadMoney(m.compare_at_price);was.style.display='';}else{was.style.display='none';}}
-    var cta=document.getElementById('nadcta-'+sid);if(cta){cta.setAttribute('data-vid',m.id);if(m.available){cta.disabled=false;if(cta.textContent.trim()==='Sold out')cta.textContent=cta.getAttribute('data-label')||'Add to bag';}else{cta.disabled=true;cta.textContent='Sold out';}}
+    var label=null;var cta=document.getElementById('nadcta-'+sid);if(cta){label=cta.getAttribute('data-label')||'Add to bag';cta.setAttribute('data-vid',m.id);if(m.available){cta.disabled=false;if(cta.textContent.trim()==='Sold out')cta.textContent=label;}else{cta.disabled=true;cta.textContent='Sold out';}}
+    if(window.pdpTrustRefresh)window.pdpTrustRefresh(sid,m);
+    if(window.pdpStickyRefresh)window.pdpStickyRefresh(sid,m);
     if(m.featured_image&&m.featured_image.position){var g=document.getElementById('nadg-'+sid);if(g)g.scrollTo({left:(m.featured_image.position-1)*g.clientWidth,behavior:'smooth'});}
   }
   function nadAdd(b,id,grp){var o=b.textContent;var vid=b.getAttribute('data-vid')||id;var item={id:parseInt(vid,10),quantity:1};
     if(grp){var r=document.querySelector('input[name="nadplan-'+grp+'"]:checked');if(r&&r.value){item.selling_plan=parseInt(r.value.replace(/\D/g,''),10);}}
     b.disabled=true;b.textContent='Adding…';
     fetch('/cart/add.js',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({items:[item]})})
-    .then(function(r){if(!r.ok)throw 0;document.dispatchEvent(new CustomEvent('cart:refresh'));if(window.openCart)window.openCart();b.textContent='Added ✓';setTimeout(function(){b.disabled=false;b.textContent=o;},1600);})
+    .then(function(r){if(!r.ok)throw 0;document.dispatchEvent(new CustomEvent('cart:refresh'));b.textContent='Added ✓';setTimeout(function(){b.disabled=false;b.textContent=o;},1600);})
     .catch(function(){b.disabled=false;b.textContent=o;window.location.href='/cart';});}
   function nadExp(b){var w=b.parentNode;w.classList.toggle('open');var s=b.querySelector('span'),i=b.querySelector('b');if(w.classList.contains('open')){s.textContent='Show less';i.textContent='−';}else{s.textContent='Read more';i.textContent='+';w.scrollIntoView({block:'nearest'});}}
   (function(){function ini(){var xs=document.querySelectorAll('.nad-exp');for(var k=0;k<xs.length;k++){var w=xs[k];w.classList.add('clamp');var inr=w.querySelector('.nad-exp-in');if(inr&&inr.scrollHeight<=inr.clientHeight+2)w.classList.remove('clamp');}}

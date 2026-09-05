@@ -217,7 +217,7 @@
         {% if section.settings.subtitle != blank %}
           <span class="sb-subtitle">{{ section.settings.subtitle }}</span>
         {% endif %}
-        <img class="vc-hbanner-left" src="{{ 'vitc-h-title.png' | asset_url }}" alt="Vitamin C Serum">
+        <img class="vc-hbanner-left" src="{{ 'vitc-h-title.png' | file_url }}" alt="Vitamin C Serum">
         <h1 class="sb-title vc-hvh">{{ section.settings.title }}</h1>
         <div class="sb-body">{{ section.settings.intro_text }}</div>
         {% if section.settings.show_cta %}
@@ -237,7 +237,7 @@
 
     <!-- What is it Section -->
     <div>
-      <img class="vc-hbanner" src="{{ 'vitc-h-def.png' | asset_url }}" alt="Why Vitamin C?">
+      <img class="vc-hbanner" src="{{ 'vitc-h-def.png' | file_url }}" alt="Why Vitamin C?">
       <h2 class="sb-heading-2 vc-hvh">{{ section.settings.definition_title }}</h2>
       <div class="sb-body" style="max-width: 800px; margin: 0 auto; text-align: center;">
         {{ section.settings.definition_text }}
@@ -248,7 +248,7 @@
 
     <!-- Benefits Grid -->
     <div>
-      <img class="vc-hbanner" src="{{ 'vitc-h-ben.png' | asset_url }}" alt="The Skin Benefits">
+      <img class="vc-hbanner" src="{{ 'vitc-h-ben.png' | file_url }}" alt="The Skin Benefits">
       <h2 class="sb-heading-2 vc-hvh">{{ section.settings.benefits_title }}</h2>
       <div class="sb-grid-3">
         {% for block in section.blocks %}
@@ -264,7 +264,7 @@
 
     <!-- Usage & Ritual -->
     <div class="sb-usage-box">
-      <img class="vc-hbanner" src="{{ 'vitc-h-ritual.png' | asset_url }}" alt="The Ritual">
+      <img class="vc-hbanner" src="{{ 'vitc-h-ritual.png' | file_url }}" alt="The Ritual">
       <h2 class="sb-heading-2 vc-hvh" style="margin-top: 0;">{{ section.settings.ritual_title }}</h2>
       <div class="sb-body" style="text-align: center; max-width: 800px; margin: 0 auto;">
         {{ section.settings.ritual_text }}

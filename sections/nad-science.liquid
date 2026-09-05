@@ -2,7 +2,7 @@
 <section class="nad-science" style="background:{{ section.settings.bg }};">
   <div class="nadsc-wrap">
     <h2 style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;padding:0;margin:-1px;border:0;">The science of NAD+</h2>
-    <img class="nad-header-img" src="{{ section.settings.header_image | default: 'nad-h-science.png' | asset_url }}" alt="The science explained" loading="lazy" width="1500" height="340">
+    <img class="nad-header-img" src="{{ section.settings.header_image | default: 'nad-h-science.png' | file_url }}" alt="The science explained" loading="lazy" width="1500" height="340">
     <div class="nadsc-body"><div class="nad-exp"><div class="nad-exp-in">{%- if section.settings.use_metafield and product.metafields.custom.description_accordion != blank -%}{% render 'phc-richtext', rt: product.metafields.custom.description_accordion.value %}{%- elsif section.settings.use_metafield and product.description != blank -%}{{ product.description }}{%- else -%}{{ section.settings.body }}{%- endif -%}</div><button type="button" class="nad-exp-btn" onclick="nadExp(this)"><span>Read more</span> <b>+</b></button></div></div>
     {%- if section.settings.insight != blank -%}
       <figure class="nadsc-insight">

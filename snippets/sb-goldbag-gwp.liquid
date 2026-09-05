@@ -1,8 +1,8 @@
 {%- comment -%} Gold Bag gift feature. variant 'dt' (desktop) / 'mb' (mobile). Editable via NAD · Hero section settings. Hidden on SkinCeuticals. {%- endcomment -%}
 {%- unless product.vendor == 'SkinCeuticals' -%}
-{%- assign gb_img = 'goldbag-gift.png' | asset_url -%}
+{%- assign gb_img = 'goldbag-gift.png' | file_url -%}
 {%- if image != blank -%}{%- assign gb_img = image | image_url: width: 440 -%}{%- endif -%}
-{%- assign gb_head = 'bh-heading.png' | asset_url -%}
+{%- assign gb_head = 'bh-heading.png' | file_url -%}
 {%- if heading != blank -%}{%- assign gb_head = heading | image_url: width: 400 -%}{%- endif -%}
 {%- assign gb_bg = bg | default: '#F9F3ED' -%}
 {%- assign gb_accent = accent | default: '#B8925A' -%}

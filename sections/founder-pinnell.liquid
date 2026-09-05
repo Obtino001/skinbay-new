@@ -149,7 +149,7 @@
         {% endif %}
       </div>
       <div class="tsb-hero-content">
-        <img class="sk-hbanner" src="{{ 'skc-h-hero.png' | asset_url }}" alt="SkinCeuticals Founder: Dr. Sheldon Pinnell">
+        <img class="sk-hbanner" src="{{ 'skc-h-hero.png' | file_url }}" alt="SkinCeuticals Founder: Dr. Sheldon Pinnell">
         <h1 class="h2 tsb-title sk-hvh">{{ section.settings.hero_title }}</h1>
         <div class="rte tsb-text">
           {{ section.settings.hero_bio }}
@@ -161,7 +161,7 @@
     {% if section.settings.show_patent %}
     <div class="tsb-patent-section">
       <div class="tsb-patent-content">
-        <img class="sk-hbanner" src="{{ 'skc-h-patent.png' | asset_url }}" alt="A life dedicated to research">
+        <img class="sk-hbanner" src="{{ 'skc-h-patent.png' | file_url }}" alt="A life dedicated to research">
         <h2 class="h3 tsb-subtitle sk-hvh">{{ section.settings.patent_title }}</h2>
         <div class="rte tsb-text">
           {{ section.settings.patent_text }}
@@ -186,7 +186,7 @@
     <!-- TIMELINE SECTION -->
     {% if section.blocks.size > 0 %}
     <div class="tsb-timeline-section">
-      <img class="sk-hbanner" src="{{ 'skc-h-milestones.png' | asset_url }}" alt="Career Milestones">
+      <img class="sk-hbanner" src="{{ 'skc-h-milestones.png' | file_url }}" alt="Career Milestones">
       <h3 class="h3 tsb-subtitle text-center sk-hvh">CAREER MILESTONES</h3>
       <div class="tsb-timeline-grid">
         {% for block in section.blocks %}

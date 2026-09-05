@@ -19,7 +19,7 @@
           <img class="bayblog-founder__photo" src="{{ section.settings.founder_image | image_url: width: 240 }}"
             alt="{{ section.settings.founder_name | default: 'Emmalee' | escape }}, founder of theskinbay" width="120" height="120" loading="lazy">
         {%- else -%}
-          <img class="bayblog-founder__photo" src="{{ 'email-founder-emmalee.jpg' | asset_url }}"
+          <img class="bayblog-founder__photo" src="{{ 'email-founder-emmalee.jpg' | file_url }}"
             alt="{{ section.settings.founder_name | default: 'Emmalee' | escape }}, founder of theskinbay" width="120" height="120" loading="lazy">
         {%- endif -%}
         <div class="bayblog-founder__text">

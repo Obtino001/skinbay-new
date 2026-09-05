@@ -306,7 +306,7 @@
   {%- comment -%}── Founder note ────────────────────────────────{%- endcomment -%}
   <section class="lf-cp-founder">
     <div class="lf-cp-founder-inner">
-      <img class="lf-cp-founder-photo" src="{{ 'email-founder-emmalee.jpg' | asset_url }}" alt="Emmalee Fitton, Founder of The Skin Bay" width="120" height="120" loading="lazy">
+      <img class="lf-cp-founder-photo" src="{{ 'email-founder-emmalee.jpg' | file_url }}" alt="Emmalee Fitton, Founder of The Skin Bay" width="120" height="120" loading="lazy">
       <div class="lf-cp-founder-text">
         <p class="lf-cp-founder-kicker">A Note From Our Founder</p>
         <p class="lf-cp-founder-quote">Worried about your order? Contact the shop and speak to our staff. Want dedicated skincare advice? Book a consultation. Any other questions? Don&rsquo;t hesitate to email us, we&rsquo;re always happy to help.</p>
@@ -399,7 +399,7 @@
 
       <div class="lf-cp-form-col">
         <span class="lf-cp-section-label">Send a message</span>
-        <img class="lf-cp-ibanner" src="{{ 'contact-h-form.png' | asset_url }}" alt="We'll get back to you within a day.">
+        <img class="lf-cp-ibanner" src="{{ 'contact-h-form.png' | file_url }}" alt="We'll get back to you within a day.">
         <h2 class="lf-cp-section-heading lf-cp-vh">{{ section.settings.form_heading }}</h2>
 
         {%- form 'contact' -%}
@@ -465,7 +465,7 @@
       <div class="lf-cp-side">
         <div>
           <span class="lf-cp-section-label">Stay in the loop</span>
-          <img class="lf-cp-ibanner" src="{{ 'contact-h-sms.png' | asset_url }}" alt="Exclusive offers. Direct to you.">
+          <img class="lf-cp-ibanner" src="{{ 'contact-h-sms.png' | file_url }}" alt="Exclusive offers. Direct to you.">
           <h2 class="lf-cp-section-heading lf-cp-vh">{{ section.settings.sms_heading }}</h2>
           <p class="lf-cp-sms-intro">{{ section.settings.sms_body }}</p>
           <div class="lf-cp-sms-box">

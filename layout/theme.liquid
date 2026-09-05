@@ -122,6 +122,7 @@
     {% if settings.quick_add or settings.mobile_quick_add %}
       {% render 'quick-add-modal' %}
     {% endif %}
+    {% section 'cart-drawer' %}
     {%- comment -%} cookie-banner snippet removed 2026-08-03: was a duplicate of Shopify's native consent banner (two banners fought over consent state). Snippet file kept for reference. {%- endcomment -%}
   {% render 'sb-freeship-popup' %}
 </body>

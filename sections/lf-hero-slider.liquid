@@ -212,13 +212,13 @@
               {%- else -%}
                 {%- if _is_first -%}
                 <img
-                  src="{{ 'SPF Banner Theskinbay.png' | asset_url }}"
+                  src="{{ 'SPF Banner Theskinbay.png' | file_url }}"
                   alt="{{ _img_alt | escape }}"
                   loading="eager"
                   fetchpriority="high">
                 {%- else -%}
                 <img
-                  data-src="{{ 'SPF Banner Theskinbay.png' | asset_url }}"
+                  data-src="{{ 'SPF Banner Theskinbay.png' | file_url }}"
                   alt="{{ _img_alt | escape }}"
                   loading="lazy"
                   fetchpriority="low"
@@ -254,7 +254,7 @@
                 width="{{ _fb_img.width }}"
                 height="{{ _fb_img.height }}">
             {%- else -%}
-              <img src="{{ 'SPF Banner Theskinbay.png' | asset_url }}" alt="TheSkinBay" loading="eager" fetchpriority="high">
+              <img src="{{ 'SPF Banner Theskinbay.png' | file_url }}" alt="TheSkinBay" loading="eager" fetchpriority="high">
             {%- endif -%}
           </div>
         </div>

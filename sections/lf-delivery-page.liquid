@@ -328,7 +328,7 @@
   <section class="lf-del-services">
     <div class="lf-del-services-inner">
       <span class="lf-del-section-eyebrow">Delivery options</span>
-      <img class="lf-del-banner-int" src="{{ 'delivery-h-speed.png' | asset_url }}" alt="Choose how fast it arrives.">
+      <img class="lf-del-banner-int" src="{{ 'delivery-h-speed.png' | file_url }}" alt="Choose how fast it arrives.">
       <h2 class="lf-del-section-heading lf-del-vh">Choose how fast <em>it arrives.</em></h2>
       <div class="lf-del-grid">
 
@@ -441,11 +441,11 @@
   <section class="lf-del-locker">
     <div class="lf-del-locker-inner">
       <div class="lf-del-locker-media">
-        <img src="{{ 'rm-parcel-locker.jpg' | asset_url }}" alt="Royal Mail Parcel Locker" width="360" height="239" loading="lazy">
+        <img src="{{ 'rm-parcel-locker.jpg' | file_url }}" alt="Royal Mail Parcel Locker" width="360" height="239" loading="lazy">
       </div>
       <div class="lf-del-locker-copy">
         <span class="lf-del-locker-eyebrow">Collect &amp; return</span>
-        <img class="lf-del-banner-left" src="{{ 'delivery-h-lockers.png' | asset_url }}" alt="Royal Mail lockers, near you.">
+        <img class="lf-del-banner-left" src="{{ 'delivery-h-lockers.png' | file_url }}" alt="Royal Mail lockers, near you.">
         <h2 class="lf-del-locker-heading lf-del-vh">Royal Mail lockers, <em>near you.</em></h2>
         <p class="lf-del-locker-body">Because every order travels with Royal Mail, you also have their nationwide network of Parcel Lockers and collection points at your fingertips. Perfect for grabbing your parcel out of hours, or dropping off a return whenever it suits you.</p>
         <ul class="lf-del-locker-list">
@@ -472,12 +472,12 @@
 
   <div class="lf-del-rm-strip">
     <span class="lf-del-rm-label">Delivered with</span>
-    <img src="{{ 'royal-mail-logo.jpg' | asset_url }}" alt="Royal Mail" class="lf-del-rm-logo" loading="lazy">
+    <img src="{{ 'royal-mail-logo.jpg' | file_url }}" alt="Royal Mail" class="lf-del-rm-logo" loading="lazy">
   </div>
 
   {%- comment -%}── CTA ─────────────────────────────────────────{%- endcomment -%}
   <section class="lf-del-cta">
-    <img class="lf-del-banner-int" src="{{ 'delivery-h-cta.png' | asset_url }}" alt="Ready to shop? Free delivery over £{{ section.settings.free_threshold | divided_by: 100 }}." style="margin-bottom:20px;">
+    <img class="lf-del-banner-int" src="{{ 'delivery-h-cta.png' | file_url }}" alt="Ready to shop? Free delivery over £{{ section.settings.free_threshold | divided_by: 100 }}." style="margin-bottom:20px;">
     <h2 class="lf-del-cta-heading lf-del-vh">Ready to shop? <em>Free delivery over £{{ section.settings.free_threshold | divided_by: 100 }}.</em></h2>
     <p class="lf-del-cta-body">{{ section.settings.cta_body }}</p>
     <a href="{{ section.settings.cta_link | default: '/collections/all' }}" class="lf-del-cta-btn">{{ section.settings.cta_label }}</a>

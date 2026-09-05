@@ -34,7 +34,7 @@
 {%- if show_xs -%}
 <section class="nad-xs" style="background:{{ section.settings.bg }};">
   <div class="nadxs-wrap">
-    <img class="nad-header-img" src="{{ section.settings.header_image | default: 'nad-h-pair.png' | asset_url }}" alt="Complete the ritual" loading="lazy" width="1500" height="340">
+    <img class="nad-header-img" src="{{ section.settings.header_image | default: 'nad-h-pair.png' | file_url }}" alt="Complete the ritual" loading="lazy" width="1500" height="340">
 
     {%- if paired != blank and paired.available -%}
       {%- assign pv = paired.selected_or_first_available_variant -%}

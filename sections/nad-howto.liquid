@@ -6,7 +6,7 @@
 <section class="nad-howto" style="background:{{ section.settings.bg }};">
   <div class="nadht-wrap">
     <h2 style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;padding:0;margin:-1px;border:0;">How to use</h2>
-    <img class="nad-header-img" src="{{ section.settings.header_image | default: 'nad-h-howto.png' | asset_url }}" alt="How to use it" loading="lazy" width="1500" height="340">
+    <img class="nad-header-img" src="{{ section.settings.header_image | default: 'nad-h-howto.png' | file_url }}" alt="How to use it" loading="lazy" width="1500" height="340">
     <div class="nadht-cols">
       <div class="nadht-protocol">
         {%- assign hu = product.metafields.custom.how_to_use -%}
