@@ -298,11 +298,11 @@ function bindDsSearchCollapse(modal) {
 
   modal.open = function dsAnimatedOpen(event) {
     pinHeaderForSearch();
-    placePanelUnderHeader(panel);
     lockBodyScroll();
     originalOpen(event);
     document.body.classList.remove('overflow-hidden');
     lockBodyScroll();
+    placePanelUnderHeader(panel);
   };
 
   modal.close = function dsAnimatedClose(focusToggle = true) {
@@ -345,6 +345,7 @@ function bindDsSearchCollapse(modal) {
       placePanelUnderHeader(panel);
       expandSearchPanel(panel);
       initDsTrendingSliders();
+      requestAnimationFrame(() => placePanelUnderHeader(panel));
     });
     const input = details.querySelector('.ds-search-form__input');
     if (input) setTimeout(() => input.focus(), 40);

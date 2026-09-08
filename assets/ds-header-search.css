@@ -46,6 +46,16 @@
   overflow: auto;
 }
 
+.ds-header-search details[open] > summary.lf-search-trigger {
+  display: none !important;
+}
+
+@media screen and (max-width: 1023px) {
+  .lf-mobile-search-row:has(.ds-header-search details[open]) {
+    padding-bottom: 0 !important;
+  }
+}
+
 .ds-header-search details[open] > summary .svg-wrapper {
   display: flex;
 }
