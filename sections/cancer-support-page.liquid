@@ -25,7 +25,7 @@
 
   {%- comment -%} LRP BRAND BANNER {%- endcomment -%}
   {%- if section.settings.show_brand_banner -%}
-  <a href="{{ section.settings.brand_banner_link | default: '/collections/la-roche-posay' }}" class="cs-brand-banner"><img src="{{ 'lrp-brand-banner.webp' | file_url }}" alt="La Roche-Posay, Life-Changing Skincare Prescribed by Dermatologists" loading="lazy" width="1500" height="500"></a>
+  <a href="{{ section.settings.brand_banner_link | default: '/collections/la-roche-posay' }}" class="cs-brand-banner"><img src="{{ 'lrp-brand-banner.webp' | asset_url }}" alt="La Roche-Posay, Life-Changing Skincare Prescribed by Dermatologists" loading="lazy" width="1500" height="500"></a>
   {%- endif -%}
 
   {%- comment -%} INTRO {%- endcomment -%}
@@ -37,7 +37,7 @@
   <div class="cs-band">
     <div class="cs-wrap">
       <p class="cs-eyebrow cs-center">During Treatment</p>
-      <img class="cs-ibanner" src="{{ 'cancer-h-affect.png' | file_url }}" alt="How treatment can affect your skin">
+      <img class="cs-ibanner" src="{{ 'cancer-h-affect.png' | asset_url }}" alt="How treatment can affect your skin">
       <h2 class="cs-h2 cs-center cs-vh">How treatment can affect your skin</h2>
       <div class="cs-grid cs-grid-4">
         <div class="cs-concern"><span class="cs-cico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11z"/></svg></span><h3>Dryness & Tightness</h3><p>Skin can become dehydrated, flaky and uncomfortable as treatment affects the skin barrier.</p></div>
@@ -51,7 +51,7 @@
   {%- comment -%} RECOMMENDED CARE (blocks) {%- endcomment -%}
   <div class="cs-wrap">
     <p class="cs-eyebrow cs-center">A Gentle Routine</p>
-    <img class="cs-ibanner" src="{{ 'cancer-h-care.png' | file_url }}" alt="Recommended care">
+    <img class="cs-ibanner" src="{{ 'cancer-h-care.png' | asset_url }}" alt="Recommended care">
     <h2 class="cs-h2 cs-center cs-vh">Recommended care</h2>
     <div class="cs-grid cs-grid-4 cs-care">
       {%- for block in section.blocks -%}

@@ -247,7 +247,7 @@
         {%- if section.settings.headline_image != blank -%}
           <img class="vip-headline-img" src="{{ section.settings.headline_image | image_url: width: 900 }}" alt="{{ section.settings.headline | escape }}" loading="lazy">
         {%- else -%}
-          <img class="vip-headline-img" src="{{ 'sb-vip-heading.png' | file_url }}" alt="{{ section.settings.headline | escape }}" loading="lazy">
+          <img class="vip-headline-img" src="{{ 'sb-vip-heading.png' | asset_url }}" alt="{{ section.settings.headline | escape }}" loading="lazy">
         {%- endif -%}
         <h3 class="vip-headline vip-sr">{{ section.settings.headline }}</h3>
         <div class="vip-subtext">

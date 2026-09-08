@@ -297,7 +297,7 @@
     <!-- Top Header -->
     <div class="skinbay-header">
       <h4>{{ section.settings.brand_text }}</h4>
-      <img class="ab-hbanner" src="{{ 'abbey-h-hero.png' | file_url }}" alt="We all know about Abbey Clancy's glow">
+      <img class="ab-hbanner" src="{{ 'abbey-h-hero.png' | asset_url }}" alt="We all know about Abbey Clancy's glow">
       <h2 class="ab-hvh">{{ section.settings.heading }}</h2>
       <p>{{ section.settings.subheading }}</p>
     </div>
@@ -330,7 +330,7 @@
 
     <!-- Shop Masks Header -->
     <div class="skinbay-header" style="margin-top: 60px; margin-bottom: 20px;">
-      <img class="ab-hbanner" src="{{ 'abbey-h-masks.png' | file_url }}" alt="Shop the secret">
+      <img class="ab-hbanner" src="{{ 'abbey-h-masks.png' | asset_url }}" alt="Shop the secret">
       <h2 class="ab-hvh">{{ section.settings.masks_heading }}</h2>
     </div>
 
@@ -372,7 +372,7 @@
 
     {% if has_videos %}
       <div class="skinbay-header" style="margin-top: 60px; margin-bottom: 20px;">
-        <img class="ab-hbanner" src="{{ 'abbey-h-video.png' | file_url }}" alt="See it in action">
+        <img class="ab-hbanner" src="{{ 'abbey-h-video.png' | asset_url }}" alt="See it in action">
         <h2 class="ab-hvh">{{ section.settings.video_heading }}</h2>
       </div>
 
@@ -447,7 +447,7 @@
     <!-- Featured Collection -->
     {% if section.settings.featured_collection != blank %}
       <div class="skinbay-header">
-        <img class="ab-hbanner" src="{{ 'abbey-h-collection.png' | file_url }}" alt="Discover more from CliniCare">
+        <img class="ab-hbanner" src="{{ 'abbey-h-collection.png' | asset_url }}" alt="Discover more from CliniCare">
         <h2 class="ab-hvh">{{ section.settings.collection_heading }}</h2>
       </div>
       

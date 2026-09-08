@@ -5,7 +5,7 @@
 <section class="nad-benefits" style="background:{{ section.settings.bg }};--onbg:{{ section.settings.on_bg | default: '#141414' }};">
   <div class="nadbf-wrap">
     <h2 style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;padding:0;margin:-1px;border:0;">The benefits of NAD+</h2>
-    <img class="nad-header-img" src="{{ section.settings.header_image | default: 'nad-h-benefits.png' | file_url }}" alt="The benefits" loading="lazy" width="1500" height="340">
+    <img class="nad-header-img" src="{{ section.settings.header_image | default: 'nad-h-benefits.png' | asset_url }}" alt="The benefits" loading="lazy" width="1500" height="340">
     {%- unless section.settings.hide_pillars -%}
     {%- if section.settings.intro != blank -%}<p class="nadbf-intro">{{ section.settings.intro }}</p>{%- endif -%}
     <div class="nadbf-grid">

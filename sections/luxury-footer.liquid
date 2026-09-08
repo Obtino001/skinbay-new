@@ -164,7 +164,7 @@
 
   <div class="lux-footer-container">
     <div class="lux-brand-banner">
-      <img src="{{ 'home-h-footer.png' | file_url }}" alt="Great skin starts here — The Skin Bay" width="1500" height="340" loading="lazy">
+      <img src="{{ 'home-h-footer.png' | asset_url }}" alt="Great skin starts here — The Skin Bay" width="1500" height="340" loading="lazy">
     </div>
     <div class="lux-footer-top">
       <div class="lux-footer-brand">
@@ -173,9 +173,9 @@
             <div class="lux-footer-logo-svg">{{ section.settings.svg_logo_code }}</div>
           {% elsif section.settings.image_logo != blank %}
             <img src="{{ section.settings.image_logo | image_url: width: 600 }}" alt="{{ shop.name }}" class="lux-footer-logo-img" loading="lazy"
-                 onerror="this.onerror=null;this.src='{{ 'TheSkinBay Logo.png' | file_url }}';">
+                 onerror="this.onerror=null;this.src='{{ 'TheSkinBay Logo.png' | asset_url }}';">
           {% else %}
-            <img src="{{ 'TheSkinBay Logo.png' | file_url }}" alt="{{ shop.name }}" class="lux-footer-logo-img" loading="lazy">
+            <img src="{{ 'TheSkinBay Logo.png' | asset_url }}" alt="{{ shop.name }}" class="lux-footer-logo-img" loading="lazy">
           {% endif %}
         </a>
         <div class="lux-brand-bio">{{ section.settings.brand_bio }}</div>

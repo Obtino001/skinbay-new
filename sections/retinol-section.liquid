@@ -227,7 +227,7 @@
         {% if section.settings.subtitle != blank %}
           <span class="sb-subtitle">{{ section.settings.subtitle }}</span>
         {% endif %}
-        <img class="rt-hbanner-left" src="{{ 'ret-h-title.png' | file_url }}" alt="Retinol Complex">
+        <img class="rt-hbanner-left" src="{{ 'ret-h-title.png' | asset_url }}" alt="Retinol Complex">
         <h1 class="sb-title rt-hvh">{{ section.settings.title }}</h1>
         <div class="sb-body">{{ section.settings.intro_text }}</div>
         {% if section.settings.show_cta %}
@@ -247,7 +247,7 @@
 
     <!-- What is it Section -->
     <div>
-      <img class="rt-hbanner" src="{{ 'ret-h-def.png' | file_url }}" alt="What Is Retinol?">
+      <img class="rt-hbanner" src="{{ 'ret-h-def.png' | asset_url }}" alt="What Is Retinol?">
       <h2 class="sb-heading-2 rt-hvh">{{ section.settings.definition_title }}</h2>
       <div class="sb-body" style="max-width: 800px; margin: 0 auto; text-align: center;">
         {{ section.settings.definition_text }}
@@ -258,7 +258,7 @@
 
     <!-- Benefits Grid -->
     <div>
-      <img class="rt-hbanner" src="{{ 'ret-h-ben.png' | file_url }}" alt="Visible Results">
+      <img class="rt-hbanner" src="{{ 'ret-h-ben.png' | asset_url }}" alt="Visible Results">
       <h2 class="sb-heading-2 rt-hvh">{{ section.settings.benefits_title }}</h2>
       <div class="sb-grid-3">
         {% for block in section.blocks %}
@@ -274,7 +274,7 @@
 
     <!-- Usage & Ritual -->
     <div class="sb-usage-box">
-      <img class="rt-hbanner" src="{{ 'ret-h-ritual.png' | file_url }}" alt="Usage Protocol">
+      <img class="rt-hbanner" src="{{ 'ret-h-ritual.png' | asset_url }}" alt="Usage Protocol">
       <h2 class="sb-heading-2 rt-hvh" style="margin-top: 0;">{{ section.settings.ritual_title }}</h2>
       <div class="sb-body" style="text-align: center; max-width: 800px; margin: 0 auto;">
         {{ section.settings.ritual_text }}

@@ -2,7 +2,7 @@
 {%- assign g2   = section.settings.bg2  | default: '#050e1f' -%}
 {%- assign gold = section.settings.gold | default: '#d4af37' -%}
 {%- assign link = section.settings.cta_link | default: '/pages/skinbay-loyalty-rewards' -%}
-{%- if section.settings.heading_image != blank -%}{%- assign bp_head = section.settings.heading_image | image_url: width: 760 -%}{%- else -%}{%- assign bp_head = 'baypoints-heading-dark.png' | file_url -%}{%- endif -%}
+{%- if section.settings.heading_image != blank -%}{%- assign bp_head = section.settings.heading_image | image_url: width: 760 -%}{%- else -%}{%- assign bp_head = 'baypoints-heading-dark.png' | asset_url -%}{%- endif -%}
 <style>
 .sbbp-{{ section.id }}{ background:linear-gradient(135deg,{{ g1 }} 0%,{{ g2 }} 100%); padding:26px 54px;
   border-top:2px solid {{ gold }}; border-bottom:1px solid rgba(212,175,55,.4); font-family:'Lato',Helvetica,Arial,sans-serif; position:relative; overflow:hidden; }

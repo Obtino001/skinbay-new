@@ -2,7 +2,7 @@
 <section class="nad-founder" style="background:{{ section.settings.bg }};">
   <div class="nadfd-card">
     {%- if section.settings.show_photo -%}
-      <img class="nadfd-photo" src="{{ 'email-founder-emmalee.jpg' | file_url }}" alt="Emmalee Fitton, founder of theskinbay" width="96" height="96" loading="lazy">
+      <img class="nadfd-photo" src="{{ 'email-founder-emmalee.jpg' | asset_url }}" alt="Emmalee Fitton, founder of theskinbay" width="96" height="96" loading="lazy">
     {%- endif -%}
     <div class="nadfd-badge">Founder's favourite</div>
     <blockquote class="nadfd-quote">{{ section.settings.quote }}</blockquote>

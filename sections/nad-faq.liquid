@@ -2,7 +2,7 @@
 <section class="nad-faq" style="background:{{ section.settings.bg }};">
   <div class="nadfq-wrap">
     <h2 style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;padding:0;margin:-1px;border:0;">Your questions answered</h2>
-    <img class="nad-header-img" src="{{ section.settings.header_image | default: 'nad-h-faq.png' | file_url }}" alt="Your questions answered" loading="lazy" width="1500" height="340">
+    <img class="nad-header-img" src="{{ section.settings.header_image | default: 'nad-h-faq.png' | asset_url }}" alt="Your questions answered" loading="lazy" width="1500" height="340">
     <div class="nadfq-list">
       {%- for block in section.blocks -%}
         <details class="nadfq-item" {{ block.shopify_attributes }}{% if forloop.first %} open{% endif %}>
