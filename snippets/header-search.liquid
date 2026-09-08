@@ -1,13 +1,11 @@
-{% comment %}
+{% doc %}
   Renders a header search dropdown with predictive search.
 
-  Accepts:
-  - input_id: {String} Id for the search input element (required)
-  - section: {Object} Header section (for search settings & blocks)
-
-  Usage:
+  @param {string} input_id - Id for the search input element
+  @param {object} section - Header section for search settings
+  @example
   {% render 'header-search', input_id: 'Search-In-Modal', section: section %}
-{% endcomment %}
+{% enddoc %}
 
 {%- liquid
   assign search_placeholder = section.settings.search_placeholder | default: 'Search products'
@@ -185,7 +183,7 @@
                       {%- endfor -%}
                     {%- else -%}
                       <li>
-                        <a href="/collections/skinceuticals" class="ds-search-link">
+                        <a href="{{ routes.collections_url }}/skinceuticals" class="ds-search-link">
                           <span class="ds-search-link__left">
                             <span class="ds-search-link__icon" aria-hidden="true">
                               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="5" width="16" height="14" rx="2"/><path d="M8 9h8M8 13h5"/></svg>
@@ -195,7 +193,7 @@
                         </a>
                       </li>
                       <li>
-                        <a href="/collections/cliniccare" class="ds-search-link">
+                        <a href="{{ routes.collections_url }}/cliniccare" class="ds-search-link">
                           <span class="ds-search-link__left">
                             <span class="ds-search-link__icon" aria-hidden="true">
                               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="5" width="16" height="14" rx="2"/><path d="M8 9h8M8 13h5"/></svg>
@@ -205,7 +203,7 @@
                         </a>
                       </li>
                       <li>
-                        <a href="/collections/medik8" class="ds-search-link">
+                        <a href="{{ routes.collections_url }}/medik8" class="ds-search-link">
                           <span class="ds-search-link__left">
                             <span class="ds-search-link__icon" aria-hidden="true">
                               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="5" width="16" height="14" rx="2"/><path d="M8 9h8M8 13h5"/></svg>
@@ -215,7 +213,7 @@
                         </a>
                       </li>
                       <li>
-                        <a href="/collections/heliocare" class="ds-search-link">
+                        <a href="{{ routes.collections_url }}/heliocare" class="ds-search-link">
                           <span class="ds-search-link__left">
                             <span class="ds-search-link__icon" aria-hidden="true">
                               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="5" width="16" height="14" rx="2"/><path d="M8 9h8M8 13h5"/></svg>
@@ -225,7 +223,7 @@
                         </a>
                       </li>
                       <li>
-                        <a href="/collections/nad-at-home" class="ds-search-link">
+                        <a href="{{ routes.collections_url }}/nad-at-home" class="ds-search-link">
                           <span class="ds-search-link__left">
                             <span class="ds-search-link__icon" aria-hidden="true">
                               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="5" width="16" height="14" rx="2"/><path d="M8 9h8M8 13h5"/></svg>

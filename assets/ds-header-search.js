@@ -365,7 +365,11 @@ function initDsSearchEnhancements() {
   document.querySelectorAll('details-modal.ds-header-search').forEach(bindDsSearchCollapse);
 }
 
-document.addEventListener('DOMContentLoaded', initDsSearchEnhancements);
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initDsSearchEnhancements);
+} else {
+  initDsSearchEnhancements();
+}
 
 window.addEventListener(
   'resize',

@@ -4,8 +4,7 @@
     assign queries_count = predictive_search.resources.queries.size
     assign collections_count = predictive_search.resources.collections.size
     assign products_count = predictive_search.resources.products.size
-    assign first_column_results_size = queries_count | plus: collections_count | plus: predictive_search.resources.pages.size | plus: predictive_search.resources.articles.size
-    assign total_results = products_count | plus: first_column_results_size
+    assign total_results = products_count | plus: queries_count | plus: collections_count | plus: predictive_search.resources.pages.size | plus: predictive_search.resources.articles.size
   -%}
   <div id="predictive-search-results" role="listbox">
     {%- if total_results > 0 -%}
