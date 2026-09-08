@@ -28,7 +28,7 @@ class DetailsModal extends HTMLElement {
 
   onBodyClick(event) {
     if (
-      (!this.contains(event.target) && !event.target.closest('.lx-header-search')) ||
+      (!this.contains(event.target) && !event.target.closest('.ds-header-search')) ||
       event.target.classList.contains('modal-overlay')
     ) {
       this.close(false);

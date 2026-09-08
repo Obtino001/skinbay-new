@@ -77,6 +77,7 @@ class PredictiveSearch extends SearchForm {
   }
 
   onFocusOut() {
+    if (this.closest('.ds-header-search')) return;
     setTimeout(() => {
       if (!this.contains(document.activeElement)) this.close();
     });
@@ -177,7 +178,19 @@ class PredictiveSearch extends SearchForm {
       return;
     }
 
-    fetch(`${routes.predictive_search_url}?q=${encodeURIComponent(searchTerm)}&section_id=predictive-search`, {
+    this.abortController.abort();
+    this.abortController = new AbortController();
+
+    const suggestUrl = window.routes?.predictive_search_url || '/search/suggest';
+    const params = new URLSearchParams({
+      q: searchTerm,
+      'section_id': 'predictive-search',
+      'resources[limit]': '4',
+      'resources[limit_scope]': 'each',
+      'resources[type]': 'product,query,collection',
+    });
+
+    fetch(`${suggestUrl}?${params.toString()}`, {
       signal: this.abortController.signal,
     })
       .then((response) => {
@@ -190,14 +203,19 @@ class PredictiveSearch extends SearchForm {
         return response.text();
       })
       .then((text) => {
-        const section = new DOMParser()
-          .parseFromString(text, 'text/html')
-          .querySelector('#shopify-section-predictive-search');
+        const doc = new DOMParser().parseFromString(text, 'text/html');
+        const section =
+          doc.querySelector('#shopify-section-predictive-search') ||
+          doc.querySelector('[id^="shopify-section-predictive-search"]');
         if (!section) {
           this.close();
           return;
         }
         const resultsMarkup = section.innerHTML;
+        if (!resultsMarkup || !resultsMarkup.trim()) {
+          this.close();
+          return;
+        }
         this.allPredictiveSearchInstances.forEach((predictiveSearchInstance) => {
           predictiveSearchInstance.cachedResults[queryKey] = resultsMarkup;
         });
@@ -247,13 +265,19 @@ class PredictiveSearch extends SearchForm {
   }
 
   getResultsMaxHeight() {
-    this.resultsMaxHeight =
-      window.innerHeight - document.querySelector('.section-header')?.getBoundingClientRect().bottom;
+    const header =
+      document.getElementById('header-group') ||
+      document.querySelector('.section-header') ||
+      document.querySelector('.lf-header-root');
+    const bottom = header ? header.getBoundingClientRect().bottom : 0;
+    this.resultsMaxHeight = Math.max(160, window.innerHeight - bottom - 24);
     return this.resultsMaxHeight;
   }
 
   open() {
-    this.predictiveSearchResults.style.maxHeight = this.resultsMaxHeight || `${this.getResultsMaxHeight()}px`;
+    if (!this.closest('.ds-header-search') && this.predictiveSearchResults) {
+      this.predictiveSearchResults.style.maxHeight = `${this.resultsMaxHeight || this.getResultsMaxHeight()}px`;
+    }
     this.setAttribute('open', true);
     this.input.setAttribute('aria-expanded', true);
     this.isOpen = true;

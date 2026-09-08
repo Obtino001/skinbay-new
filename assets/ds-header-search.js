@@ -6,7 +6,11 @@
 const DS_SEARCH_DURATION = 360;
 
 function getHeaderEl() {
-  return document.querySelector('.section-header');
+  return (
+    document.querySelector('.section-header') ||
+    document.querySelector('.lf-header-root') ||
+    document.getElementById('header-group')
+  );
 }
 
 function getHeaderBarEl() {
@@ -27,37 +31,14 @@ function getHeaderBarEl() {
  * Any other sticky top bars are also scanned and included if they extend lower.
  */
 function getSearchPanelTop() {
+  const group = document.getElementById('header-group');
+  if (group) {
+    return Math.max(0, Math.round(group.getBoundingClientRect().bottom));
+  }
+
   const headerBar = getHeaderBarEl();
   if (!headerBar) return 0;
-
-  let top = headerBar.getBoundingClientRect().bottom;
-
-  // Include any other header-group sections stuck in the top chrome
-  // (extra announcement bars, utility bars, etc.)
-  const group =
-    document.querySelector('.shopify-section-group-header-group') ||
-    document.querySelector('#shopify-section-group-header-group');
-
-  const extras = group
-    ? group.querySelectorAll(':scope > .shopify-section')
-    : document.querySelectorAll(
-        '.announcement-bar-section, .shopify-section-announcement-bar, .utility-bar'
-      );
-
-  extras.forEach((section) => {
-    if (section.classList.contains('section-header')) return;
-    const rect = section.getBoundingClientRect();
-    if (rect.height < 1 || rect.bottom <= 0) return;
-    // Only bars that are part of the top stack (near top / above header)
-    if (rect.top <= top + 2 && rect.bottom > 0) {
-      top = Math.max(top, rect.bottom);
-    }
-  });
-
-  // Final guarantee: never higher than the header bar bottom
-  top = Math.max(top, headerBar.getBoundingClientRect().bottom);
-
-  return Math.max(0, Math.round(top));
+  return Math.max(0, Math.round(headerBar.getBoundingClientRect().bottom));
 }
 
 function isDsSearchOpen() {
@@ -97,13 +78,16 @@ function unlockBodyScroll() {
 
 function pinHeaderForSearch() {
   const header = getHeaderEl();
-  if (!header) return;
-  header.classList.add('ds-search-header-pinned');
-  header.classList.remove('shopify-section-header-hidden', 'animate');
+  if (header) {
+    header.classList.add('ds-search-header-pinned');
+    header.classList.remove('shopify-section-header-hidden', 'animate');
+  }
+  document.getElementById('header-group')?.classList.add('ds-search-header-pinned');
 }
 
 function unpinHeaderForSearch() {
   getHeaderEl()?.classList.remove('ds-search-header-pinned');
+  document.getElementById('header-group')?.classList.remove('ds-search-header-pinned');
 }
 
 function placePanelUnderHeader(panel) {
@@ -114,19 +98,24 @@ function placePanelUnderHeader(panel) {
   return top;
 }
 
+function getSearchPanelMaxHeight() {
+  return Math.max(220, window.innerHeight - getSearchPanelTop());
+}
+
 function expandSearchPanel(panel) {
   if (!panel) return;
 
   placePanelUnderHeader(panel);
 
+  const maxH = getSearchPanelMaxHeight();
   panel.classList.add('is-open', 'is-animating');
   panel.style.visibility = 'visible';
   panel.style.pointerEvents = 'auto';
   panel.style.overflow = 'hidden';
-  panel.style.maxHeight = 'none';
+  panel.style.maxHeight = `${maxH}px`;
   panel.style.height = '0px';
 
-  const target = panel.scrollHeight;
+  const target = Math.min(panel.scrollHeight, maxH);
 
   // eslint-disable-next-line no-unused-expressions
   panel.offsetHeight;
@@ -139,8 +128,8 @@ function expandSearchPanel(panel) {
     panel.removeEventListener('transitionend', onEnd);
     panel.style.transition = '';
     panel.style.height = 'auto';
-    panel.style.maxHeight = 'none';
-    panel.style.overflow = 'visible';
+    panel.style.maxHeight = `${maxH}px`;
+    panel.style.overflow = 'auto';
     panel.classList.remove('is-animating');
   };
 
@@ -149,17 +138,18 @@ function expandSearchPanel(panel) {
     if (!panel.classList.contains('is-animating')) return;
     panel.style.transition = '';
     panel.style.height = 'auto';
-    panel.style.maxHeight = 'none';
-    panel.style.overflow = 'visible';
+    panel.style.maxHeight = `${maxH}px`;
+    panel.style.overflow = 'auto';
     panel.classList.remove('is-animating');
   }, DS_SEARCH_DURATION + 60);
 }
 
 function fitOpenSearchPanel(panel) {
   if (!panel || !panel.classList.contains('is-open') || panel.classList.contains('is-animating')) return;
+  const maxH = getSearchPanelMaxHeight();
   panel.style.height = 'auto';
-  panel.style.maxHeight = 'none';
-  panel.style.overflow = 'visible';
+  panel.style.maxHeight = `${maxH}px`;
+  panel.style.overflow = 'auto';
 }
 
 function collapseSearchPanel(panel) {
