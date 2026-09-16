@@ -96,6 +96,13 @@
     margin-block-start: var(--margin-lg);
   }
 
+  @media screen and (max-width: 749px) {
+    .cart-page.spacing-style {
+      padding-inline-start: max(var(--page-margin), var(--padding-inline-start));
+      padding-inline-end: max(var(--page-margin), var(--padding-inline-end));
+    }
+  }
+
   @media screen and (min-width: 750px) {
     .cart-page {
       grid-template-columns: 1fr min(50vw, var(--sidebar-width));
