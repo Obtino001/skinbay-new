@@ -52,7 +52,7 @@
   {%- assign href = col.url | default: section.settings.fallback_url | default: '#' -%}
   <a class="skinny-gift" href="{{ href }}" style="--sg-bg:{{ section.settings.bg_color }};--sg-fg:{{ section.settings.text_color }};">
     <span class="skinny-gift__inner">
-      {%- if g.eyebrow.value != blank -%}<span class="skinny-gift__eyebrow">{{ g.eyebrow.value }}</span>{%- endif -%}
+      <span class="skinny-gift__gift" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12v9H4v-9"/><path d="M2 7h20v5H2z"/><path d="M12 22V7"/><path d="M12 7S10.5 3 8 3a2 2 0 0 0 0 4h4z"/><path d="M12 7s1.5-4 4-4a2 2 0 0 1 0 4h-4z"/></svg></span>{%- if g.eyebrow.value != blank -%}<span class="skinny-gift__eyebrow">{{ g.eyebrow.value }}</span>{%- endif -%}
       <span class="skinny-gift__main">
         {%- if g.headline.value != blank -%}<strong class="skinny-gift__headline">{{ g.headline.value }}</strong>{%- endif -%}
         {%- if g.offer.value != blank -%}<span class="skinny-gift__offer">{{ g.offer.value }}</span>{%- endif -%}
@@ -64,18 +64,19 @@
 
 {% stylesheet %}
   .skinny-gift { display:block; text-decoration:none; background:var(--sg-bg,#0b1225); color:var(--sg-fg,#fff);
-    font-family:'Lato',sans-serif; padding:14px 20px; transition:filter .2s ease; }
+    font-family:'Lato',sans-serif; padding:19px 20px; border-top:2px solid #b8925a; transition:filter .2s ease; }
   .skinny-gift:hover { filter:brightness(1.08); }
   .skinny-gift__inner { max-width:1200px; margin:0 auto; display:flex; align-items:center; justify-content:center;
     flex-wrap:wrap; gap:6px 16px; text-align:center; }
-  .skinny-gift__eyebrow { font-size:10px; letter-spacing:.22em; text-transform:uppercase; font-weight:700; opacity:.7; }
+  .skinny-gift__gift svg { width:22px; height:22px; color:#e9c36b; display:block; }
+  .skinny-gift__eyebrow { font-size:10px; letter-spacing:.24em; text-transform:uppercase; font-weight:700; color:#e9c36b; }
   .skinny-gift__main { display:inline-flex; align-items:baseline; flex-wrap:wrap; justify-content:center; gap:4px 8px; }
   .skinny-gift__headline { font-size:clamp(.9rem,.82rem+.4vw,1.1rem); font-weight:700; letter-spacing:.02em; text-transform:uppercase; }
   .skinny-gift__offer { font-size:clamp(.8rem,.76rem+.25vw,.95rem); font-style:italic; opacity:.9; text-transform:none; }
   .skinny-gift__cta { font-size:.8rem; font-weight:700; text-transform:uppercase; letter-spacing:.08em;
-    border-bottom:1px solid currentColor; padding-bottom:1px; white-space:nowrap; }
+    border-bottom:1px solid #e9c36b; color:#e9c36b; padding-bottom:1px; white-space:nowrap; }
   @media (max-width:600px){
-    .skinny-gift { padding:11px 14px; }
+    .skinny-gift { padding:15px 14px; }
     .skinny-gift__inner { gap:3px 10px; }
     .skinny-gift__eyebrow { flex-basis:100%; }
   }

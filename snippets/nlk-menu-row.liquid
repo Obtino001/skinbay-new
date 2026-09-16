@@ -47,6 +47,21 @@
     endif
   endif
 
+  if nlk_img == blank
+    assign nlk_th = link.title | handleize
+    assign nlk_custom = nil
+    case nlk_th
+      when 'consultation'
+        assign nlk_custom = 'menutile-consultation.jpg'
+      when 'about'
+        assign nlk_custom = 'menutile-about.png'
+      when 'free-gifts'
+        assign nlk_custom = 'menutile-free-gifts.png'
+      when 'gifts'
+        assign nlk_custom = 'menutile-free-gifts.png'
+    endcase
+  endif
+
   if chevron == blank
     assign chevron = 'inside'
   endif
@@ -66,9 +81,11 @@
   {% if link.current %}aria-current="page"{% endif %}
 >
 {%- endif -%}
-  <span class="nlk-thumb">
+  <span class="nlk-thumb"{% if panel_id != blank %} data-href="{{ link.url }}" role="link" tabindex="0" aria-label="Go to {{ link.title | escape }}"{% endif %}>
     {%- if nlk_img != blank -%}
       {{ nlk_img | image_url: width: 160, height: 160, crop: 'center' | image_tag: loading: 'lazy', alt: nlk_alt }}
+    {%- elsif nlk_custom != blank -%}
+      <img src="{{ nlk_custom | asset_url }}" loading="lazy" alt="{{ nlk_alt }}" width="160" height="160">
     {%- endif -%}
   </span>
   <span class="nlk-label">{{ link.title | escape }}</span>

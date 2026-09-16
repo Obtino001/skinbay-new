@@ -48,7 +48,9 @@
   {%- endif -%}
 </section>
 <style>
-  .home-hero{padding:0 0 34px;text-align:center;overflow:hidden;}
+  .home-hero{padding:0;margin:0;text-align:center;overflow:hidden;}
+  /* clean edge: no pagination dots (keep side arrows), flush into next section */
+  .home-hero .hh-dots,.home-hero .hh-brands{display:none !important;}
   .hh-h1{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;}
   .hh-slider{position:relative;display:grid;}
   .hh-slide{grid-area:1/1;opacity:0;visibility:hidden;transition:opacity .6s ease;pointer-events:none;}
@@ -139,7 +141,7 @@
     { "type": "text", "id": "seo_h1", "label": "SEO H1 (hidden)", "default": "Medical-Grade Skincare & Clinic-Backed Brands at The Skin Bay" },
     { "type": "header", "content": "Slider" },
     { "type": "checkbox", "id": "autoplay", "label": "Auto-slide", "default": true },
-    { "type": "range", "id": "autoplay_speed", "min": 3, "max": 12, "step": 1, "unit": "s", "label": "Seconds per slide", "default": 6 },
+    { "type": "range", "id": "autoplay_speed", "min": 3, "max": 12, "step": 1, "unit": "s", "label": "Seconds per slide", "default": 5 },
     { "type": "checkbox", "id": "show_arrows", "label": "Show arrows", "default": true },
     { "type": "checkbox", "id": "show_dots", "label": "Show dots", "default": true },
     { "type": "text", "id": "brand_strip", "label": "Brand strip (blank = hide)" }

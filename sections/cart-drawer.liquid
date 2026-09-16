@@ -306,6 +306,7 @@
                 <span>{{ section.settings.total_label }}</span>
                 <span class="WI_cartDrawer_total_price">{{ cart.total_price | money }}</span>
               </div>
+              <a href="{{ routes.cart_url }}" class="WI_cartDrawer_locker_link" style="display:block;text-align:center;margin:0 0 12px;font-size:12px;letter-spacing:.02em;color:inherit;text-decoration:underline;line-height:1.45;">View full cart &amp; choose a Royal Mail locker</a>
               <button type="submit" name="checkout" value="Checkout" class="WI_cartDrawer_checkout">
                 {{ section.settings.checkout_btn_text }}
               </button>

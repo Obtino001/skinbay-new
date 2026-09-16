@@ -1,0 +1,180 @@
+{%- comment -%}
+  Royal Mail Locker / Local Collect picker — cart page (Horizon).
+  Real data: reads assets/rm-lockers.json (generated from Royal Mail's daily
+  RMPUDO flat file — Local Collect lockers only). Customer postcode is geocoded
+  via postcodes.io (free, no key). Nearest points computed in-browser.
+  Chosen locker saves to cart attributes so it flows onto the order:
+    - "Royal Mail Locker"  (visible)   - "_rm_locker" (hidden JSON for Click & Drop)
+{%- endcomment -%}
+
+{%- assign saved = cart.attributes['Royal Mail Locker'] -%}
+
+<div class="section-background color-{{ section.settings.color_scheme }}"></div>
+<div class="section color-{{ section.settings.color_scheme }} section--{{ section.settings.section_width }}">
+  <div class="rmlp spacing-style" style="{% render 'spacing-style', settings: section.settings %}">
+    <div class="rmlp__card" data-rmlp data-src="{{ 'rm-lockers.json' | asset_url }}">
+      <div class="rmlp__head">
+        <span class="rmlp__badge" aria-hidden="true">Royal Mail</span>
+        <h2 class="rmlp__title">{{ section.settings.heading }}</h2>
+        {%- if section.settings.intro != blank -%}<p class="rmlp__intro">{{ section.settings.intro }}</p>{%- endif -%}
+      </div>
+
+      <div class="rmlp__chosen{% if saved == blank %} rmlp--hidden{% endif %}" data-rmlp-chosen>
+        <div>
+          <span class="rmlp__chosen-label">Collecting from</span>
+          <strong class="rmlp__chosen-name" data-rmlp-chosen-name>{{ saved }}</strong>
+        </div>
+        <button type="button" class="rmlp__link" data-rmlp-change>Change</button>
+      </div>
+
+      <div class="rmlp__search{% if saved != blank %} rmlp--hidden{% endif %}" data-rmlp-search>
+        <label class="rmlp__field-label" for="rmlp-postcode">Enter your postcode</label>
+        <div class="rmlp__row">
+          <input id="rmlp-postcode" type="text" autocomplete="postal-code"
+                 class="rmlp__input" placeholder="e.g. {{ section.settings.example_postcode }}" data-rmlp-postcode>
+          <button type="button" class="rmlp__btn" data-rmlp-find>Find lockers</button>
+        </div>
+        <p class="rmlp__note">{{ section.settings.helper_text }}</p>
+        <ul class="rmlp__results" data-rmlp-results hidden></ul>
+        <p class="rmlp__empty" data-rmlp-empty hidden></p>
+      </div>
+
+      <div class="rmlp__legal">
+        {%- if section.settings.collect_note != blank -%}<p class="rmlp__legal-line">{{ section.settings.collect_note }}</p>{%- endif -%}
+        {%- if section.settings.privacy_note != blank -%}<p class="rmlp__legal-line">{{ section.settings.privacy_note }}{%- if section.settings.privacy_url != blank %} <a href="{{ section.settings.privacy_url }}" target="_blank" rel="noopener">Royal Mail privacy notice</a>.{%- endif -%}</p>{%- endif -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  var root = document.querySelector('[data-rmlp]');
+  if (!root) return;
+  var DATA_URL = root.getAttribute('data-src');
+  var els = {
+    search:  root.querySelector('[data-rmlp-search]'),
+    chosen:  root.querySelector('[data-rmlp-chosen]'),
+    name:    root.querySelector('[data-rmlp-chosen-name]'),
+    postcode:root.querySelector('[data-rmlp-postcode]'),
+    find:    root.querySelector('[data-rmlp-find]'),
+    results: root.querySelector('[data-rmlp-results]'),
+    empty:   root.querySelector('[data-rmlp-empty]'),
+    change:  root.querySelector('[data-rmlp-change]')
+  };
+  var DATA = null;
+  function show(el){ if(el) el.classList.remove('rmlp--hidden'); }
+  function hide(el){ if(el) el.classList.add('rmlp--hidden'); }
+  function loadData(){
+    if (DATA) return Promise.resolve(DATA);
+    return fetch(DATA_URL).then(function(r){ return r.json(); }).then(function(d){ DATA = d; return d; });
+  }
+  function geocode(pc){
+    return fetch('https://api.postcodes.io/postcodes/' + encodeURIComponent(pc))
+      .then(function(r){ if(!r.ok) throw new Error('postcode'); return r.json(); })
+      .then(function(j){ return { la: j.result.latitude, lo: j.result.longitude }; });
+  }
+  function hav(a1,o1,a2,o2){ var R=6371,p=Math.PI/180; var x=0.5-Math.cos((a2-a1)*p)/2+Math.cos(a1*p)*Math.cos(a2*p)*(1-Math.cos((o2-o1)*p))/2; return 2*R*Math.asin(Math.sqrt(x)); }
+  function miles(km){ return (km*0.621371).toFixed(1); }
+
+  function setMsg(t){ els.empty.textContent = t; els.empty.hidden = !t; }
+
+  function render(list){
+    els.results.innerHTML = '';
+    if (!list.length){ els.results.hidden = true; setMsg('No lockers found near that postcode. Try a nearby one.'); return; }
+    setMsg('');
+    list.forEach(function(o){
+      var l = o.l, d = o.d;
+      var li = document.createElement('li');
+      li.className = 'rmlp__result';
+      li.innerHTML = '<button type="button" class="rmlp__result-btn">' +
+          '<span class="rmlp__result-name">' + l.n + '</span>' +
+          '<span class="rmlp__result-meta">' + l.a + ', ' + l.pc + ' &middot; ' + miles(d) + ' miles</span>' +
+        '</button>';
+      li.querySelector('button').addEventListener('click', function(){ choose(l); });
+      els.results.appendChild(li);
+    });
+    els.results.hidden = false;
+  }
+
+  function choose(l){
+    var visible = l.n + ' (' + l.pc + ')';
+    var payload = { id: l.id, name: l.n, address: l.a, postcode: l.pc, type: l.t };
+    fetch('/cart/update.js', {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ attributes: { 'Royal Mail Locker': visible, '_rm_locker': JSON.stringify(payload) } })
+    }).then(function(){ els.name.textContent = visible; hide(els.search); show(els.chosen); });
+  }
+
+  els.find.addEventListener('click', function(){
+    var pc = (els.postcode.value || '').trim();
+    if (!pc){ els.postcode.focus(); return; }
+    els.find.disabled = true; els.find.textContent = 'Searching…'; setMsg('');
+    geocode(pc).then(function(c){
+      return loadData().then(function(list){
+        var scored = list.map(function(l){ return { l:l, d: hav(c.la, c.lo, l.la, l.lo) }; });
+        scored.sort(function(a,b){ return a.d - b.d; });
+        render(scored.slice(0, 6));
+      });
+    }).catch(function(){ els.results.hidden = true; setMsg('Could not find that postcode. Please check and try again.'); })
+      .finally(function(){ els.find.disabled = false; els.find.textContent = 'Find lockers'; });
+  });
+
+  els.postcode.addEventListener('keydown', function(e){ if (e.key === 'Enter'){ e.preventDefault(); els.find.click(); } });
+
+  els.change.addEventListener('click', function(){
+    fetch('/cart/update.js', { method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ attributes: { 'Royal Mail Locker': '', '_rm_locker': '' } }) })
+      .then(function(){ hide(els.chosen); show(els.search); });
+  });
+})();
+</script>
+
+{% stylesheet %}
+  .rmlp__card { border:1px solid #e6e6e6; border-radius:10px; padding:20px 22px; background:#fff; }
+  .rmlp__head { margin-bottom:14px; }
+  .rmlp__badge { display:inline-block; font-size:11px; letter-spacing:.06em; text-transform:uppercase; background:#000; color:#fff; padding:3px 8px; border-radius:3px; margin-bottom:8px; }
+  .rmlp__title { font-size:18px; margin:0; color:#000; }
+  .rmlp__intro { margin:6px 0 0; font-size:14px; color:#000000cf; }
+  .rmlp__legal { margin:16px 0 0; padding-top:12px; border-top:1px solid #00000014; }
+  .rmlp__legal-line { margin:4px 0 0; font-size:12px; line-height:1.5; color:#00000099; }
+  .rmlp__legal-line a { color:inherit; text-decoration:underline; }
+  .rmlp__field-label, .rmlp__chosen-label { display:block; font-size:12px; text-transform:uppercase; letter-spacing:.04em; color:#666; margin-bottom:6px; }
+  .rmlp__row { display:flex; gap:8px; flex-wrap:wrap; }
+  .rmlp__input { flex:1 1 200px; min-width:0; padding:11px 12px; font-size:15px; border:1px solid #dfdfdf; border-radius:6px; background:#fff; color:#333; }
+  .rmlp__btn { padding:11px 18px; font-size:14px; border:1px solid #000; border-radius:6px; background:#000; color:#fff; cursor:pointer; white-space:nowrap; }
+  .rmlp__btn:hover { background:#333; }
+  .rmlp__btn:disabled { opacity:.6; cursor:default; }
+  .rmlp__note { font-size:12px; color:#888; margin:8px 0 0; }
+  .rmlp__results { list-style:none; margin:14px 0 0; padding:0; display:grid; gap:8px; }
+  .rmlp__result-btn { width:100%; text-align:left; background:#fff; border:1px solid #e6e6e6; border-radius:8px; padding:12px 14px; cursor:pointer; display:block; }
+  .rmlp__result-btn:hover { border-color:#000; background:#fafafa; }
+  .rmlp__result-name { display:block; font-size:14px; color:#000; font-weight:600; }
+  .rmlp__result-meta { display:block; font-size:12px; color:#666; margin-top:3px; }
+  .rmlp__empty { font-size:13px; color:#a00; margin-top:12px; }
+  .rmlp__chosen { display:flex; align-items:center; justify-content:space-between; gap:12px; border:1px solid #000; border-radius:8px; padding:12px 14px; background:#fafafa; }
+  .rmlp__chosen-name { display:block; font-size:14px; color:#000; }
+  .rmlp__link { background:none; border:none; text-decoration:underline; cursor:pointer; font-size:13px; color:#000; padding:0; }
+  .rmlp--hidden { display:none !important; }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Royal Mail Locker",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Collect from a Royal Mail locker" },
+    { "type": "textarea", "id": "intro", "label": "Intro text", "default": "Prefer to collect? Choose a Royal Mail Parcel Locker near you, open 7 days a week and often 24/7 (available on Tracked delivery)." },
+    { "type": "text", "id": "helper_text", "label": "Helper text", "default": "Search for lockers near your postcode." },
+    { "type": "textarea", "id": "collect_note", "label": "Collection note", "default": "Please collect within 3 days of your parcel arriving. Royal Mail will send you a collection code by text and email when it is ready." },
+    { "type": "textarea", "id": "privacy_note", "label": "Data-sharing note", "default": "By choosing locker delivery, your name and contact details are shared with Royal Mail so they can let you know when to collect. Your data is handled under the" },
+    { "type": "text", "id": "privacy_url", "label": "Royal Mail privacy notice URL", "default": "https://www.royalmail.com/privacy-notice" },
+    { "type": "text", "id": "example_postcode", "label": "Example postcode", "default": "M1 1AE" },
+    { "type": "select", "id": "section_width", "label": "Width", "options": [ { "value": "page-width", "label": "Page" }, { "value": "full-width", "label": "Full" } ], "default": "page-width" },
+    { "type": "color_scheme", "id": "color_scheme", "label": "Colour scheme", "default": "scheme-1" },
+    { "type": "header", "content": "Padding" },
+    { "type": "range", "id": "padding-block-start", "label": "Top", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 8 },
+    { "type": "range", "id": "padding-block-end", "label": "Bottom", "min": 0, "max": 100, "step": 1, "unit": "px", "default": 8 }
+  ]
+}
+{% endschema %}

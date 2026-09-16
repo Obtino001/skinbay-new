@@ -587,6 +587,8 @@
     background: #f4f4f4;
     display: block;
   }
+  .nlk-thumb[data-href]{ cursor:pointer; }
+  .nlk-thumb[data-href]:active{ opacity:.8; }
   .nlk-thumb img {
     width: 100%;
     height: 100%;
@@ -1284,85 +1286,7 @@
 </div>
 
 <!-- CART DRAWER -->
-<div id="lux-cart-drawer" role="dialog" aria-label="Your shopping bag" aria-modal="true">
-
-  <!-- Header -->
-  <div id="lf-cart-header">
-    <div id="lf-cart-title">Your Bag <span id="lf-cart-count"></span></div>
-    <button id="lf-cart-close" onclick="closeDrawers()" aria-label="Close shopping bag">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-    </button>
-  </div>
-
-  <!-- Shipping progress -->
-  <div id="lf-cart-shipping">
-    <div id="lf-ship-msg">Loading&hellip;</div>
-    <div id="lf-ship-track"><div id="lf-ship-fill"></div></div>
-  </div>
-
-  <!-- Exclusive Offers (Monk backend runs silently; custom luxury UI below) -->
-  <div id="lf-monk-offers">
-    <div id="lf-monk-offers-label">Exclusive Privileges</div>
-    <div id="lf-monk-gift-msg">Loading&hellip;</div>
-    <div id="lf-monk-gift-track"><div id="lf-monk-gift-fill"></div></div>
-    <div class="lf-monk-offer-row">
-      <div class="lf-monk-offer-dot"></div>
-      <div class="lf-monk-offer-text">Complimentary samples with qualifying brand orders</div>
-    </div>
-    <div class="lf-monk-offer-row">
-      <div class="lf-monk-offer-dot"></div>
-      <div class="lf-monk-offer-text">Exclusive seasonal gifts across selected collections</div>
-    </div>
-  </div>
-
-  <!-- Item list -->
-  <div id="lux-cart-items" role="list"></div>
-
-  <!-- Empty state -->
-  <div id="lf-cart-empty">
-    <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" aria-hidden="true"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
-    <div class="lf-ce-title">Your Bag is Empty</div>
-    <p class="lf-ce-body">Discover expertly curated skincare from the world's leading dermatology brands.</p>
-    <div class="lf-ce-links">
-      <a href="/collections/best-sellers" class="lf-ce-link" onclick="closeDrawers()">Best Sellers</a>
-      <a href="/collections/all" class="lf-ce-link" onclick="closeDrawers()">Shop All</a>
-    </div>
-  </div>
-
-  <!-- Upsell strip -->
-  <div id="lf-cart-upsells" style="display:none;">
-    <div id="lf-upsell-label">Complete Your Routine</div>
-    <div id="lf-upsell-strip"></div>
-  </div>
-
-  <!-- Footer -->
-  <div id="lf-cart-footer">
-    <div id="lf-cart-savings">
-      <span id="lf-savings-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>You're saving</span>
-      <span id="lf-savings-val"></span>
-    </div>
-    <div id="lf-cart-subtotal">
-      <span id="lf-cart-subtotal-label">Subtotal</span>
-      <span id="drawer-total-val">{{ cart.total_price | money }}</span>
-    </div>
-    <form action="/cart" method="post">
-      <button type="submit" name="checkout" id="lf-cart-checkout-btn">
-        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="1"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-        Secure Checkout
-      </button>
-    </form>
-    <div id="lf-cart-trust">
-      <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-      SSL Encrypted &nbsp;&middot;&nbsp; Free Returns
-    </div>
-    <div id="lf-cart-payments">
-      {%- for type in shop.enabled_payment_types -%}
-        {{ type | payment_type_svg_tag: class: 'payment-icon' }}
-      {%- endfor -%}
-    </div>
-  </div>
-
-</div>
+{%- comment -%} Legacy #lux-cart-drawer removed 2026-09-16 — ACTIVE cart drawer is sections/cart-drawer.liquid (<wi-cartdrawer>). Do not re-add here. {%- endcomment -%}
 
 <!-- MOBILE NAV -->
 <div class="lf-mob-drawer" id="mobile-nav">
@@ -1703,6 +1627,8 @@
   window.nlkGoBack = nlkGoBack;
 
   document.addEventListener('click', function(e) {
+    var thumbLink = e.target.closest('#mobile-nav .nlk-thumb[data-href]');
+    if (thumbLink) { e.preventDefault(); e.stopPropagation(); window.location.href = thumbLink.getAttribute('data-href'); return; }
     var trigger = e.target.closest('[data-nlk-open]');
     if (trigger && trigger.closest('#mobile-nav')) {
       e.preventDefault();
@@ -1723,6 +1649,7 @@
   });
 
   document.addEventListener('keydown', function(e) {
+    if ((e.key==='Enter'||e.key===' ') && e.target.classList && e.target.classList.contains('nlk-thumb') && e.target.getAttribute('data-href')) { e.preventDefault(); window.location.href = e.target.getAttribute('data-href'); return; }
     if (e.key !== 'Escape') return;
     var mob = document.getElementById('mobile-nav');
     if (!mob || !mob.classList.contains('active')) return;
@@ -1760,7 +1687,7 @@
   })();
 
   // ── Cart: free shipping threshold (pence) ───────────────────────
-  var LF_SHIP_THRESHOLD = 40000; // £400.00
+  var LF_SHIP_THRESHOLD = 10000; // £100.00 - free shipping over £100 (permanent)
 
   // ── Shipping progress bar ────────────────────────────────────────
   function updateShippingBar(totalPence) {
@@ -1768,13 +1695,13 @@
     var fill = document.getElementById('lf-ship-fill');
     if (!msg || !fill) return;
     if (totalPence >= LF_SHIP_THRESHOLD) {
-      msg.innerHTML = 'You\'ve unlocked <strong>free UK delivery</strong> — enjoy!';
+      msg.innerHTML = 'You\'ve unlocked <strong>FREE UK delivery!</strong>';
       msg.classList.add('lf-unlocked');
       fill.style.width = '100%';
       fill.classList.add('lf-full');
     } else {
       var rem = ((LF_SHIP_THRESHOLD - totalPence) / 100).toLocaleString('en-GB', { style: 'currency', currency: 'GBP' });
-      msg.innerHTML = 'Spend <strong>' + rem + '</strong> more for free UK delivery';
+      msg.innerHTML = 'Spend <strong>' + rem + '</strong> more for FREE UK delivery';
       msg.classList.remove('lf-unlocked');
       fill.style.width = Math.min(100, Math.round((totalPence / LF_SHIP_THRESHOLD) * 100)) + '%';
       fill.classList.remove('lf-full');
