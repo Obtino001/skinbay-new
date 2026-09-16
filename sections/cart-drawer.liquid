@@ -57,17 +57,23 @@
         unless gift_matched
           assign vendor_l = item.vendor | downcase
           if vendor_l contains 'skinceuticals'
-            assign gift_threshold = sc_threshold
-            assign gift_name = section.settings.gift_skinceuticals_name
-            assign gift_matched = true
+            if sc_threshold > 0 and section.settings.gift_skinceuticals_name != blank
+              assign gift_threshold = sc_threshold
+              assign gift_name = section.settings.gift_skinceuticals_name
+              assign gift_matched = true
+            endif
           elsif vendor_l contains 'medik8' or vendor_l contains 'medik 8'
-            assign gift_threshold = m8_threshold
-            assign gift_name = section.settings.gift_medik8_name
-            assign gift_matched = true
+            if m8_threshold > 0 and section.settings.gift_medik8_name != blank
+              assign gift_threshold = m8_threshold
+              assign gift_name = section.settings.gift_medik8_name
+              assign gift_matched = true
+            endif
           elsif vendor_l contains 'cliniccare'
-            assign gift_threshold = cc_threshold
-            assign gift_name = section.settings.gift_cliniccare_name
-            assign gift_matched = true
+            if cc_threshold > 0 and section.settings.gift_cliniccare_name != blank
+              assign gift_threshold = cc_threshold
+              assign gift_name = section.settings.gift_cliniccare_name
+              assign gift_matched = true
+            endif
           endif
         endunless
       endunless
@@ -413,7 +419,7 @@
     },
     {
       "type": "paragraph",
-      "content": "Works like the live theme: first matching brand in the bag sets the gift, then paid items count toward that spend. Gifts are still added by your gift app (Monk). Hide this panel by leaving the title blank. Thresholds are in pounds."
+      "content": "Works like the live theme: first matching active brand in the bag sets the gift, then paid items count toward that spend. Gifts are still added by your gift app (Monk). Set a brand spend to 0 or clear its gift name to disable that offer. Hide this panel by leaving the title blank. Thresholds are in pounds."
     },
     {
       "type": "text",
