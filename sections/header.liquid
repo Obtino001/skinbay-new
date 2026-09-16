@@ -550,6 +550,36 @@
   }
   .nlk-row .nlk-chevron svg { width: 16px; height: 16px; display: block; }
 
+  .lf-mob-drawer a.nlk-row--parent {
+    width: auto !important;
+    padding-right: 8px !important;
+  }
+
+  .nlk-row-toggle {
+    flex: 0 0 52px;
+    min-height: 58px;
+    padding: 0;
+    border: 0;
+    border-left: 1px solid #f2f2f2;
+    background: transparent;
+    color: #1a1a1a;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .nlk-row-toggle:hover,
+  .nlk-row-toggle:focus-visible { background: #f7f7f7; }
+
+  .nlk-row-toggle .nlk-chevron {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .nlk-row-toggle .nlk-chevron svg { width: 16px; height: 16px; display: block; }
+
   .lf-mob-drawer a.nlk-row,
   .lf-mob-drawer .nlk-row,
   .lf-mob-drawer button.nlk-row {
@@ -587,8 +617,6 @@
     background: #f4f4f4;
     display: block;
   }
-  .nlk-thumb[data-href]{ cursor:pointer; }
-  .nlk-thumb[data-href]:active{ opacity:.8; }
   .nlk-thumb img {
     width: 100%;
     height: 100%;
@@ -1563,6 +1591,9 @@
     nlkStack = ['nlk-panel-root'];
     var viewport = document.getElementById('nlk-viewport');
     if (viewport) viewport.classList.remove('is-sub-open');
+    document.querySelectorAll('#mobile-nav [data-nlk-open]').forEach(function(trigger) {
+      trigger.setAttribute('aria-expanded', 'false');
+    });
     document.querySelectorAll('#mobile-nav .nlk-submenu').forEach(function(panel) {
       panel.classList.remove('is-open', 'is-behind');
       panel.scrollTop = 0;
@@ -1591,6 +1622,9 @@
     next.classList.remove('is-behind');
     next.scrollTop = 0;
     nlkStack.push(panelId);
+    document.querySelectorAll('#mobile-nav [data-nlk-open]').forEach(function(trigger) {
+      if (trigger.getAttribute('data-nlk-open') === panelId) trigger.setAttribute('aria-expanded', 'true');
+    });
 
     if (viewport) viewport.classList.add('is-sub-open');
     nlkUpdateHead();
@@ -1603,6 +1637,9 @@
     var closingId = nlkStack.pop();
     var closing = document.getElementById(closingId);
     if (closing) closing.classList.remove('is-open', 'is-behind');
+    document.querySelectorAll('#mobile-nav [data-nlk-open]').forEach(function(trigger) {
+      if (trigger.getAttribute('data-nlk-open') === closingId) trigger.setAttribute('aria-expanded', 'false');
+    });
 
     var prevId = nlkStack[nlkStack.length - 1];
 
@@ -1627,8 +1664,6 @@
   window.nlkGoBack = nlkGoBack;
 
   document.addEventListener('click', function(e) {
-    var thumbLink = e.target.closest('#mobile-nav .nlk-thumb[data-href]');
-    if (thumbLink) { e.preventDefault(); e.stopPropagation(); window.location.href = thumbLink.getAttribute('data-href'); return; }
     var trigger = e.target.closest('[data-nlk-open]');
     if (trigger && trigger.closest('#mobile-nav')) {
       e.preventDefault();
@@ -1649,7 +1684,6 @@
   });
 
   document.addEventListener('keydown', function(e) {
-    if ((e.key==='Enter'||e.key===' ') && e.target.classList && e.target.classList.contains('nlk-thumb') && e.target.getAttribute('data-href')) { e.preventDefault(); window.location.href = e.target.getAttribute('data-href'); return; }
     if (e.key !== 'Escape') return;
     var mob = document.getElementById('mobile-nav');
     if (!mob || !mob.classList.contains('active')) return;
@@ -2068,5 +2102,3 @@
 <script src="{{ 'details-modal.js' | asset_url }}" defer="defer"></script>
 <script src="{{ 'search-form.js' | asset_url }}" defer="defer"></script>
 <script src="{{ 'ds-predictive-search.js' | asset_url }}" defer="defer"></script>
-
-

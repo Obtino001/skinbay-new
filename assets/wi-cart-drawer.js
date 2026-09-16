@@ -13,6 +13,7 @@ class WIcartDrawer extends HTMLElement {
     this._updateQueue = Promise.resolve();
     this._recsAbort = null;
     this._lastUpdate = 0;
+    this._giftSyncId = 0;
   }
 
   wait(ms) {
@@ -311,7 +312,9 @@ class WIcartDrawer extends HTMLElement {
 
       this._lastUpdate = Date.now();
       if (!options.skipRecs) this.loadRecommendations();
-      if (mode === "add") this.scheduleGiftRefresh();
+      if (["add", "update", "remove"].includes(mode)) {
+        this.scheduleGiftRefresh();
+      }
     } catch (err) {
       console.error("WIcartDrawer Update Error:", err);
     } finally {
@@ -320,32 +323,51 @@ class WIcartDrawer extends HTMLElement {
     }
   }
 
-  cartHasComplimentary() {
-    return !!this.querySelector(".WI_cartDrawer_item_price--gift");
+  renderedCartSignature() {
+    return [...this.querySelectorAll(".WI_cartDrawer_item")]
+      .map((item) => {
+        return [
+          item.getAttribute("data-itemKey") || "",
+          item.getAttribute("data-quantity") || "0",
+          item.getAttribute("data-final-price") || "0",
+        ].join(":");
+      })
+      .sort()
+      .join("|");
+  }
+
+  apiCartSignature(cart) {
+    return (cart?.items || [])
+      .map((item) => {
+        return [
+          item.key || "",
+          Number(item.quantity || 0),
+          Number(item.final_price ?? item.price ?? 0),
+        ].join(":");
+      })
+      .sort()
+      .join("|");
   }
 
   scheduleGiftRefresh() {
     clearTimeout(this._giftRefreshTimer);
-    this._giftPollAbort = true;
-    if (this.cartHasComplimentary()) return;
-
-    const startCount = this.querySelectorAll(".WI_cartDrawer_item").length;
-    this._giftPollAbort = false;
-    let attempts = 0;
+    const syncId = ++this._giftSyncId;
+    const renderedSignature = this.renderedCartSignature();
+    const delays = [200, 400, 700, 1100, 1600, 2300];
+    let attempt = 0;
 
     const poll = async () => {
-      if (this._giftPollAbort) return;
-      attempts += 1;
+      if (syncId !== this._giftSyncId) return;
       try {
         const cart = await fetch("/cart.js", { cache: "no-store" }).then((r) =>
           r.json()
         );
-        const items = cart.items || [];
-        const hasGift = items.some((item) => {
-          const price = Number(item.final_price ?? item.price ?? item.line_price);
-          return price === 0;
-        });
-        if (hasGift || items.length > startCount) {
+        if (syncId !== this._giftSyncId) return;
+
+        // Monk owns the active offer and gift variant. When it adds, swaps, or
+        // removes that line after the customer's cart change, redraw the drawer
+        // from Shopify instead of hard-coding a gift product in the theme.
+        if (this.apiCartSignature(cart) !== renderedSignature) {
           await this.updateCart({
             mode: "refresh",
             skipRecs: true,
@@ -356,12 +378,15 @@ class WIcartDrawer extends HTMLElement {
       } catch (err) {
         /* keep polling */
       }
-      if (attempts < 8) {
-        this._giftRefreshTimer = setTimeout(poll, 160);
+
+      if (syncId === this._giftSyncId && attempt < delays.length) {
+        this._giftRefreshTimer = setTimeout(poll, delays[attempt]);
+        attempt += 1;
       }
     };
 
-    this._giftRefreshTimer = setTimeout(poll, 120);
+    this._giftRefreshTimer = setTimeout(poll, delays[attempt]);
+    attempt += 1;
   }
 
   loadRecommendations() {
